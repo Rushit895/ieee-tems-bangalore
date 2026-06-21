@@ -9,7 +9,9 @@
 
 .chair-feature {
     position: relative;
-    background: #f4f7fb;
+    background:
+        radial-gradient(circle at 78% 12%, rgba(20,71,98,0.55), transparent 55%),
+        linear-gradient(180deg, #06111f 0%, #0a1d33 100%);
     overflow: hidden;
     padding: 0;
 }
@@ -20,9 +22,9 @@
     inset: 0;
     pointer-events: none;
     background-image:
-        radial-gradient(circle, rgba(20,71,98,0.06) 1px, transparent 1px);
+        radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
     background-size: 60px 60px;
-    opacity: 0.5;
+    opacity: 0.6;
 }
 
 @keyframes chairParticles {
@@ -160,45 +162,50 @@
     transform: translateX(0);
 }
 
-/* Giant decorative quote mark */
+/* Refined gold quote mark */
 .chair-quote-mark {
-    font-family: Georgia, serif;
-    font-size: 9rem;
-    line-height: 0.6;
-    color: #144762;
-    opacity: 0.12;
-    margin-bottom: 0.5rem;
-    font-weight: 900;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 4.5rem;
+    line-height: 0.9;
+    color: #c9a84c;
+    opacity: 0.85;
+    margin-bottom: 0.25rem;
+    font-weight: 700;
     user-select: none;
     transform: scale(0);
-    transition: transform 0.7s cubic-bezier(0.34,1.56,0.64,1) 0.6s,
-                opacity 0.7s ease 0.6s;
+    transform-origin: left center;
+    transition: transform 0.6s cubic-bezier(0.34,1.56,0.64,1) 0.6s,
+                opacity 0.6s ease 0.6s;
 }
 
 .chair-message-panel.in-view .chair-quote-mark {
     transform: scale(1);
-    opacity: 0.12;
+    opacity: 0.85;
 }
 
-/* Section title */
+/* Section eyebrow-style title */
 .chair-section-title {
-    font-size: clamp(1.6rem, 2.5vw, 2.4rem);
-    font-weight: 800;
-    color: #0d2137;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
     margin: 0 0 1.5rem;
-    line-height: 1.1;
+    line-height: 1.4;
 }
 
 .chair-section-title span { color: #c9a84c; }
 
-/* Pull quote */
+/* Pull quote — the typographic hero */
 .chair-pull-quote {
-    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(1.45rem, 2.6vw, 2.15rem);
     font-style: italic;
-    color: #1a3a5c;
-    font-weight: 500;
-    line-height: 1.7;
-    margin: 0 0 1.5rem;
+    color: #f3f8fc;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    margin: 0 0 1.75rem;
     border: none;
     padding: 0;
     position: relative;
@@ -217,9 +224,9 @@
 
 /* Body text */
 .chair-body {
-    font-size: 0.95rem;
-    color: #4a6070;
-    line-height: 1.85;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.72);
+    line-height: 1.9;
     margin: 0 0 2rem;
 }
 
@@ -241,17 +248,18 @@
 .chair-message-panel.in-view .chair-sig-line { width: 36px; }
 
 .chair-signature strong {
-    font-size: 1rem;
+    font-size: 1.05rem;
     font-weight: 700;
-    color: #0d2137;
+    color: #ffffff;
     letter-spacing: 0.02em;
 }
 
 .chair-signature span {
-    font-size: 0.78rem;
-    color: #7a9ab0;
-    letter-spacing: 0.06em;
+    font-size: 0.76rem;
+    color: rgba(201,168,76,0.85);
+    letter-spacing: 0.08em;
     text-transform: uppercase;
+    margin-top: 2px;
 }
 
 /* ── Responsive ── */
@@ -266,7 +274,7 @@
         padding: 3rem 6vw;
     }
     .chair-quote-mark {
-        font-size: 6rem;
+        font-size: 3.5rem;
     }
 }
 
@@ -855,7 +863,9 @@
    ══════════════════════════════════════════════════════════ */
 
 #chair {
-    background: linear-gradient(160deg, #f0f4f8 0%, #f8f7f4 100%) !important;
+    background:
+        radial-gradient(circle at 78% 12%, rgba(20,71,98,0.55), transparent 55%),
+        linear-gradient(180deg, #06111f 0%, #0a1d33 100%) !important;
     padding: 5rem 0;
 }
 
@@ -866,9 +876,9 @@
 /* Ensure DB-injected content stays dark */
 .chair-body .ieee-description,
 .chair-body p {
-    color: #4a6070 !important;
-    font-size: 0.95rem !important;
-    line-height: 1.85 !important;
+    color: rgba(255,255,255,0.72) !important;
+    font-size: 1rem !important;
+    line-height: 1.9 !important;
 }
 
 /* Chair image — overridden by .chair-photo-img for new design */
@@ -936,8 +946,8 @@
 
 /* Body paragraphs in chair message */
 #chair-msg-full .ieee-description {
-    color: #5a6a7a !important;
-    line-height: 1.8 !important;
+    color: rgba(255,255,255,0.72) !important;
+    line-height: 1.9 !important;
 }
 
 /* Signature */
