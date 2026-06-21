@@ -722,7 +722,56 @@
 
 @media (max-width: 600px) {
     .leadership-grid { grid-template-columns: 1fr; }
-    .modal-container { border-radius: 0; max-height: 100vh; height: 100vh; }
+
+    /* Full-screen modal with a fixed-height photo + scrollable details */
+    .modal-container {
+        border-radius: 0;
+        max-height: 100vh;
+        height: 100vh;
+        height: 100dvh;
+        grid-template-rows: auto 1fr;
+    }
+    .modal-left {
+        aspect-ratio: auto;
+        height: 250px;
+    }
+    .modal-left img { object-position: top center; }
+
+    .modal-right {
+        padding: var(--space-5);
+        overflow-y: auto;
+    }
+    .modal-name {
+        font-size: 1.55rem;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+    .modal-designation { font-size: 0.82rem; margin-bottom: var(--space-3); }
+    .modal-bio {
+        font-size: 1rem;
+        line-height: 1.7;
+        margin-bottom: var(--space-4);
+        padding-left: var(--space-3);
+    }
+
+    /* Stack the contact links so long emails/URLs don't overflow */
+    .modal-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-3);
+        padding-top: var(--space-4);
+    }
+    .action-link {
+        max-width: 100%;
+        min-width: 0;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+    }
+    .action-link span {
+        min-width: 0;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
 }
 
 /* --- TIMELINE --- */
