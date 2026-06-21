@@ -19,7 +19,7 @@ connectDB();
 // to PRODUCTION_ORIGINS once known, then set NODE_ENV=production on the server.
 const PRODUCTION_ORIGINS = [
   'https://chapters.bangalore.ieee-tems.org',
-  // 'https://your-site.netlify.app', // TODO: add deployed frontend origin
+  'https://ieee-tems-bangalore.netlify.app',
 ];
 const DEV_ORIGINS = ['http://localhost:8080', 'http://localhost:3000', 'http://localhost:5173'];
 const allowedOrigins = process.env.NODE_ENV === 'production'
