@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | IEEE TEMS Bangalore Section</title>
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="css/cinematic-hero.css">
+    <link rel="stylesheet" href="css/contact.css">
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="page-hero cine-hero" id="contact-hero" data-hero-page="contact">
+            <div class="cine-media">
+                <img class="cine-bg-img" src="https://images.unsplash.com/photo-1534536281715-e28d76689b4d?q=80&w=2000" alt="">
+                <video class="cine-bg-video" muted loop playsinline></video>
+            </div>
+            <div class="cine-overlay"></div>
+            <div class="hero-center-content">
+                <span id="hero-label" class="cine-label" data-hero-label>GET IN TOUCH</span>
+                <h1 id="hero-title" data-hero-title>Contact IEEE TEMS <span>Bangalore</span></h1>
+                <p id="hero-desc" data-hero-desc>Reach out to our section leadership for membership, events, collaborations, or any queries.</p>
+            </div>
+            <div class="cine-scroll-indicator"><span>Scroll</span><div class="cine-scroll-line"></div></div>
+            <div class="cine-gold-line"></div>
+        </section>
+
+        <!-- Step 2: Main Contact Layout -->
+        <section class="section-spacing bg-light">
+            <div class="container">
+                <div class="text-container text-container-centered mb-64">
+                    <span class="section-label">Communication Channels</span>
+                    <h2 class="ieee-heading">How to <span>Reach Us</span></h2>
+                    <p class="ieee-description">Use the form below or our direct contact details to start a conversation with our section leadership.</p>
+                </div>
+                <div class="contact-container reveal">
+                    <!-- Left Section: Contact Info -->
+                    <div class="contact-info" id="contact-info-list">
+                        <!-- Dynamically populated -->
+                    </div>
+
+                    <!-- Right Section: Contact Form -->
+                    <div class="contact-form-wrapper">
+                        <form id="contact-form">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="name">Full Name</label>
+                                    <input type="text" id="name" name="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email Address</label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="subject">Subject</label>
+                                    <input type="text" id="subject" name="subject" required>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="message">Message</label>
+                                    <textarea id="message" name="message" required></textarea>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn" id="submit-btn">Send Message</button>
+                            <p id="response-msg" style="margin-top: 20px; text-align: center; font-weight: 600;"></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <!-- Script Links -->
+    <script src="js/navbar.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/cinematic-hero.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            initCinematicHero('contact');
+            const UPLOADS_BASE = BACKEND_BASE + '/uploads/';
+
+            // Render Contact Info
+            try {
+                const infoRes = await API.getHome('contact-info');
+                const infoList = document.getElementById('contact-info-list');
+                if (infoRes && infoRes.status === 'success' && infoRes.data.length > 0) {
+                    // Group by type for specific rendering if needed, or just list
+                    let html = '';
+                    
+                    // Address
+                    const address = infoRes.data.find(i => i.type === 'address');
+                    if (address) {
+                        html += `
+                            <div class="info-item">
+                                <div class="icon-box"><i class="${address.icon || 'fas fa-map-pin'}"></i></div>
+                                <div class="info-content">
+                                    <h3>${address.label || 'Our Location'}</h3>
+                                    <p>${address.value}</p>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Phones
+                    const phones = infoRes.data.filter(i => i.type === 'phone');
+                    if (phones.length > 0) {
+                        html += `
+                            <div class="info-item">
+                                <div class="icon-box"><i class="fas fa-phone-alt"></i></div>
+                                <div class="info-content">
+                                    <h3>Phone Numbers</h3>
+                                    ${phones.map(p => `<p>${p.value} (${p.label || 'Direct'})</p>`).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Emails
+                    const emails = infoRes.data.filter(i => i.type === 'email');
+                    if (emails.length > 0) {
+                        html += `
+                            <div class="info-item">
+                                <div class="icon-box"><i class="fas fa-envelope"></i></div>
+                                <div class="info-content">
+                                    <h3>Official Email</h3>
+                                    ${emails.map(e => `<a href="mailto:${e.value}">${e.value}</a>`).join('<br>')}
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Socials (Separate fetch or integrated?)
+                    const socialRes = await API.getHome('social-links');
+                    if (socialRes && socialRes.status === 'success' && socialRes.data.length > 0) {
+                        html += `
+                            <div class="info-item">
+                                <div class="info-content">
+                                    <h3>Follow Us</h3>
+                                    <div class="social-links">
+                                        ${socialRes.data.map(s => `
+                                            <a href="${s.url}" class="social-btn" target="_blank" title="${s.platform}">
+                                                <i class="${s.icon}"></i>
+                                            </a>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    infoList.innerHTML = html;
+                }
+            } catch (e) { console.error(e); }
+        });
+
+        document.getElementById('contact-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submit-btn');
+            const msg = document.getElementById('response-msg');
+            
+            const formData = {
+                name: document.getElementById('name').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                subject: document.getElementById('subject').value.trim(),
+                message: document.getElementById('message').value.trim()
+            };
+
+            if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+                msg.innerText = 'Please fill in all fields.';
+                msg.style.color = '#ef4444';
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(formData.email)) {
+                msg.innerText = 'Please enter a valid email address.';
+                msg.style.color = '#ef4444';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            msg.innerText = '';
+
+            try {
+                const result = await API.submitContact(formData);
+                if (result && result.status === 'success') {
+                    msg.innerText = 'Your message has been sent successfully! We will get back to you soon.';
+                    msg.style.color = '#10b981';
+                    document.getElementById('contact-form').reset();
+                } else {
+                    msg.innerText = (result && result.message) ? result.message : 'Failed to send message. Please try again.';
+                    msg.style.color = '#ef4444';
+                }
+            } catch (error) {
+                console.error(error);
+                msg.innerText = 'An error occurred. Please try again later.';
+                msg.style.color = '#ef4444';
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Send Message';
+            }
+        });
+    </script>
+</body>
+</html>

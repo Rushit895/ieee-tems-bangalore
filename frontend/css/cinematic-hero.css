@@ -1,0 +1,279 @@
+/* ============================================================
+   CINEMATIC PAGE HERO — SHARED SYSTEM
+   Used on: about, execom, branches, blogs, resources, contact,
+            join-ieee, search (all pages except home & 75-years)
+   Admin-editable via /api/home/page-content?page=X&section=hero
+   ============================================================ */
+
+.cine-hero,
+.cine-hero.page-hero {
+    position: relative !important;
+    height: 78vh !important;
+    min-height: 520px !important;
+    max-height: 820px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #000d1a !important;
+    background-image: none !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+}
+
+/* Remove the old gold underline accent (replaced by gold progress bar) */
+.cine-hero.page-hero::after { display: none !important; }
+
+/* ── Media layer (image OR video, swapped via JS) ── */
+.cine-hero .cine-media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.cine-hero .cine-bg-img,
+.cine-hero .cine-bg-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translate(-50%, -50%) scale(1.12);
+    animation: cineZoom 14s ease-out forwards;
+}
+
+.cine-hero .cine-bg-video { display: none; }
+.cine-hero.cine-video-mode .cine-bg-video { display: block; }
+.cine-hero.cine-video-mode .cine-bg-img { display: none; }
+
+@keyframes cineZoom {
+    0%   { transform: translate(-50%, -50%) scale(1.15); }
+    100% { transform: translate(-50%, -50%) scale(1.0); }
+}
+
+/* ── Layered gradient overlay for readability ── */
+.cine-hero .cine-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+        linear-gradient(160deg,
+            rgba(5, 18, 41, 0.86) 0%,
+            rgba(10, 42, 75, 0.62) 50%,
+            rgba(5, 12, 28, 0.82) 100%),
+        linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 40%);
+}
+
+/* ── Floating particle texture ── */
+.cine-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background-image:
+        radial-gradient(circle, rgba(255,255,255,0.10) 1px, transparent 1px),
+        radial-gradient(circle, rgba(201,162,39,0.10) 1px, transparent 1px);
+    background-size: 90px 90px, 140px 140px;
+    background-position: 0 0, 45px 45px;
+    animation: cineParticles 18s linear infinite;
+}
+
+@keyframes cineParticles {
+    0%   { transform: translateY(0) translateX(0); }
+    33%  { transform: translateY(-10px) translateX(5px); }
+    66%  { transform: translateY(-5px) translateX(-7px); }
+    100% { transform: translateY(0) translateX(0); }
+}
+
+/* ── Gold progress line ── */
+.cine-hero .cine-gold-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, #c9a84c, transparent);
+    z-index: 10;
+    animation: cineGoldLine 3s ease-in-out 1.6s both;
+}
+
+@keyframes cineGoldLine {
+    from { opacity: 0; transform: scaleX(0); }
+    to   { opacity: 1; transform: scaleX(1); }
+}
+
+/* ── Content container ── */
+.cine-hero .hero-center-content,
+.cine-hero.page-hero .text-container {
+    position: relative !important;
+    z-index: 5 !important;
+    text-align: center !important;
+    max-width: 820px !important;
+    width: 100% !important;
+    padding: 0 32px !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    animation: none !important; /* override pageHeroIn, we animate children */
+}
+
+/* ── Eyebrow / label ── */
+.cine-hero .cine-label,
+.cine-hero .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.28em;
+    color: #c9a84c !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    animation: cineFadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.3s both;
+}
+
+.cine-hero .cine-label::before,
+.cine-hero .cine-label::after {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 1px;
+    background: #c9a84c;
+    opacity: 0.6;
+}
+
+/* ── Headline with word-by-word reveal ── */
+.cine-hero h1,
+.cine-hero.page-hero h1,
+.cine-hero .ieee-heading {
+    font-size: clamp(2.4rem, 5.2vw, 4.6rem) !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+    line-height: 1.12 !important;
+    margin-bottom: 1.4rem !important;
+    text-align: center !important;
+    text-shadow: 0 4px 24px rgba(0,0,0,0.4) !important;
+    overflow: visible !important;
+}
+
+.cine-hero h1 span:not(.cine-word),
+.cine-hero .ieee-heading span:not(.cine-word) { color: #c9a84c !important; }
+
+.cine-hero h1 span.cine-word,
+.cine-hero .ieee-heading span.cine-word { color: inherit; }
+
+.cine-hero h1 .cine-word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: cineWordReveal 0.65s cubic-bezier(0.22,1,0.36,1) both;
+}
+
+@keyframes cineWordReveal {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Description paragraph ── */
+.cine-hero p,
+.cine-hero.page-hero p,
+.cine-hero .ieee-description {
+    font-size: 1.1rem !important;
+    color: rgba(255,255,255,0.82) !important;
+    line-height: 1.8 !important;
+    max-width: 620px !important;
+    margin: 0 auto !important;
+    font-weight: 400 !important;
+    text-align: center !important;
+    opacity: 0;
+    animation: cineFadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 1.0s both !important;
+}
+
+/* ── Optional CTA inside hero ── */
+.cine-hero .cine-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #c9a84c;
+    color: #0d1f35;
+    font-weight: 800;
+    padding: 16px 40px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    margin-top: 1.75rem;
+    opacity: 0;
+    animation: cineFadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 1.3s both;
+    box-shadow: 0 8px 30px rgba(201,168,76,0.35);
+}
+
+.cine-hero .cine-cta:hover {
+    background: #e0bc5a;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(201,168,76,0.5);
+}
+
+/* ── Scroll indicator ── */
+.cine-hero .cine-scroll-indicator {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: cineFadeUp 1s ease 1.8s both;
+}
+
+.cine-hero .cine-scroll-indicator span {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+}
+
+.cine-hero .cine-scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(201,168,76,0.8), transparent);
+    animation: cineScrollDrop 1.6s ease-in-out infinite;
+}
+
+@keyframes cineScrollDrop {
+    0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
+    50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+    100% { transform: scaleY(1); transform-origin: bottom; opacity: 0; }
+}
+
+@keyframes cineFadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .cine-hero,
+    .cine-hero.page-hero {
+        height: 64vh !important;
+        min-height: 440px !important;
+    }
+    .cine-hero h1,
+    .cine-hero.page-hero h1,
+    .cine-hero .ieee-heading {
+        font-size: 2.2rem !important;
+    }
+    .cine-hero p,
+    .cine-hero.page-hero p,
+    .cine-hero .ieee-description {
+        font-size: 1rem !important;
+    }
+}

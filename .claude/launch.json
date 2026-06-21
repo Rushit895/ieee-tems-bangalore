@@ -1,0 +1,28 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "frontend-static",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "frontend"],
+      "port": 8080,
+      "autoPort": true
+    },
+    {
+      "name": "backend",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["server.js"],
+      "cwd": "backend",
+      "port": 5000,
+      "autoPort": false
+    },
+    {
+      "name": "admin-panel",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "cwd": "admin-panel",
+      "port": 3000,
+      "autoPort": false
+    }
+  ]
+}

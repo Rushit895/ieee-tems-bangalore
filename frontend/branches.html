@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Branches | IEEE TEMS Bangalore Section</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="css/cinematic-hero.css">
+    <link rel="stylesheet" href="css/branches.css?v=2">
+    <style>
+        /* ── Karnataka Map (image-based) ── */
+        .karnataka-map-section { padding: 24px 0 40px; display: flex; justify-content: center; }
+        .karnataka-map-card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 0 0 1px rgba(201,162,39,0.20), 0 8px 40px rgba(0,0,0,0.12);
+            padding: 24px 24px 16px;
+            width: 100%;
+            max-width: 480px;
+        }
+        .karnataka-img-wrapper { position: relative; width: 100%; line-height: 0; }
+        .karnataka-img {
+            width: 100%; height: auto; display: block; border-radius: 8px;
+            filter: hue-rotate(200deg) saturate(0.3) brightness(0.92);
+        }
+        .branch-dots-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+        .karnataka-img-wrapper { position: relative; transform-origin: center center; transition: transform 0.2s ease; }
+        .b-dot { position: absolute; transform: translate(-50%,-50%); pointer-events: all; cursor: pointer; z-index: 5; }
+        .b-dot-circle {
+            width: 10px; height: 10px;
+            background: #c9a227; border: 2px solid #1a3a6b; border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: transform 0.15s ease, background 0.2s ease;
+            animation: branchDotPulse 2.5s ease-in-out infinite;
+        }
+        .b-dot:hover .b-dot-circle { transform: scale(1.4); background: #e8b820; }
+        .branch-tooltip,
+        .b-dot-label {
+            position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+            background: #0d2137; color: #ffffff;
+            font-size: 0.78rem; font-weight: 600; padding: 6px 10px; border-radius: 8px;
+            white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease;
+            border: 1.5px solid #c9a84c; letter-spacing: 0.02em;
+            box-shadow: 0 4px 12px rgba(13,33,55,0.2);
+        }
+        .b-dot:hover .branch-tooltip,
+        .b-dot:hover .b-dot-label { opacity: 1; transform: translateX(-50%) translateY(-2px); }
+        .branch-popup {
+            position: absolute;
+            bottom: 120%; left: 50%; transform: translateX(-50%);
+            min-width: 180px;
+            max-width: 220px;
+            background: #0d2137;
+            color: #ffffff;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1.5px solid #c9a84c;
+            font-size: 0.82rem;
+            line-height: 1.4;
+            box-shadow: 0 10px 28px rgba(13,33,55,0.18);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: 10;
+        }
+        .branch-popup.visible { opacity: 1; }
+        .branch-popup strong { display: block; margin-bottom: 4px; font-size: 0.92rem; }
+        @keyframes branchDotPulse {
+            0%,100% { box-shadow: 0 0 0 0 rgba(201,162,39,0.5), 0 2px 8px rgba(0,0,0,0.25); }
+            50%     { box-shadow: 0 0 0 8px rgba(201,162,39,0), 0 2px 8px rgba(0,0,0,0.25); }
+        }
+        .map-card-legend {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 4px 0; border-top: 1px solid #f1f5f9; margin-top: 12px;
+        }
+        .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: #1a3a6b; }
+        .legend-gold-dot { width: 10px; height: 10px; background: #c9a227; border: 2px solid #1a3a6b; border-radius: 50%; flex-shrink: 0; }
+        .legend-count { font-size: 11px; color: #64748b; font-weight: 600; }
+        @media (max-width: 600px) { .karnataka-map-card { max-width: 100%; padding: 16px 12px 12px; } .b-dot-circle { width: 13px; height: 13px; } }
+        /* Modal leader styles */
+        .modal-leaders-row { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .modal-leader-card { display: flex; align-items: center; gap: 14px; background: #f8fafc; border: 1px solid var(--ieee-grey); border-radius: 12px; padding: 14px 18px; flex: 1; min-width: 180px; }
+        .modal-leader-photo { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--ieee-gold); flex-shrink: 0; }
+        .modal-leader-placeholder { display: flex; align-items: center; justify-content: center; background: #e2e8f0; color: #94a3b8; font-size: 1.25rem; }
+        .modal-leader-info { display: flex; flex-direction: column; gap: 2px; }
+        .modal-leader-role { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ieee-blue); }
+        .modal-leader-name { font-size: 0.95rem; font-weight: 700; color: var(--ieee-royal-blue); }
+        .modal-leader-linkedin { color: #0077b5; font-size: 1rem; margin-top: 2px; text-decoration: none; }
+        .modal-leader-linkedin:hover { color: var(--ieee-gold); }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="page-hero cine-hero" id="branches-hero" data-hero-page="branches">
+            <div class="cine-media">
+                <img class="cine-bg-img" src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2000" alt="">
+                <video class="cine-bg-video" muted loop playsinline></video>
+            </div>
+            <div class="cine-overlay"></div>
+            <div class="hero-center-content">
+                <span id="hero-label" class="cine-label" data-hero-label>Student Network</span>
+                <h1 id="hero-title" class="ieee-heading" data-hero-title>Empowering Student Innovation <br>Across <span>Karnataka</span></h1>
+                <p id="hero-desc" class="ieee-description" data-hero-desc>Connecting thousands of bright minds through a robust network of TEMS student chapters in premier institutes.</p>
+            </div>
+            <div class="cine-scroll-indicator"><span>Scroll</span><div class="cine-scroll-line"></div></div>
+            <div class="cine-gold-line"></div>
+        </section>
+
+        <!-- Map Section — ARCHIVED (Geographic Footprint hidden until map placement is accurate) -->
+        <section class="section-spacing" style="display:none;">
+            <div class="container map-container">
+                <div class="text-container text-container-centered mb-48">
+                    <span class="section-label">Our Presence</span>
+                    <h2 class="ieee-heading">Geographic <span>Footprint</span></h2>
+                    <p class="ieee-description" id="map-desc">A dedicated leadership and management ecosystem strictly within the Karnataka region.</p>
+                </div>
+                <div class="map-frame-wrapper">
+                    <div class="map-header-bar">
+                        <span class="map-header-label">&#9689; IEEE TEMS Bangalore — Karnataka Region Coverage</span>
+                    </div>
+                    <div class="karnataka-map-section">
+                        <div class="karnataka-map-card">
+                            <div class="karnataka-img-wrapper" id="karnataka-img-wrapper">
+                                <img
+                                    src="assets/karnataka-districts.png.jpeg"
+                                    alt="Karnataka District Map — IEEE TEMS Bangalore"
+                                    class="karnataka-img"
+                                    id="karnataka-img"
+                                    onload="placeBranchDots()"
+                                    onerror="this.style.opacity='0.3'"
+                                />
+                                <div class="branch-dots-layer" id="branch-dots-layer"></div>
+                            </div>
+                            <div class="map-card-legend">
+                                <div class="legend-item">
+                                    <span class="legend-gold-dot"></span>
+                                    <span>IEEE TEMS Student Branch</span>
+                                </div>
+                                <div class="legend-count" id="branch-count-label"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center" style="margin-top: 50px;">
+                    <a href="contact.html" class="btn btn-primary">Establish TEMS Student Branch in Your Institute</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Branch Listing Section -->
+        <section class="section-spacing bg-light">
+            <div class="container">
+                <div class="text-container text-container-centered mb-64">
+                    <span class="section-label">Active Chapters</span>
+                    <h2 class="ieee-heading">Our <span>Student Branches</span></h2>
+                    <p class="ieee-description" id="list-desc">Explore our network of student chapters across premier technical institutes in the state.</p>
+                </div>
+                <div class="branches-grid" id="branches-container">
+                    <!-- Loaded Dynamically -->
+                </div>
+                <div class="text-center" style="margin-top: 56px;">
+                    <a href="contact.html" class="btn btn-primary">Establish TEMS Student Branch in Your Institute</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Branch Modal -->
+    <div class="branch-modal" id="branch-modal">
+        <div class="modal-content-rich">
+            <button class="modal-close-btn" id="close-branch-modal"><i class="fas fa-times"></i></button>
+            <div class="modal-hero" id="modal-hero-container"><img id="modal-branch-img" src="" alt="Branch Hero"></div>
+            <div class="modal-body-padding">
+                <div class="flex-between" style="align-items: flex-start;">
+                    <div>
+                        <h2 id="modal-branch-name" style="color: var(--ieee-royal-blue); font-size: 2.2rem; margin-bottom: 8px;"></h2>
+                        <div class="branch-meta" id="modal-branch-meta"></div>
+                    </div>
+                    <div class="branch-social" id="modal-branch-social"></div>
+                </div>
+                <div style="margin-top: 30px;" id="modal-branch-desc-container">
+                    <h3 style="font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ieee-blue); margin-bottom: 12px;">About the Branch</h3>
+                    <p id="modal-branch-desc" style="line-height: 1.7; color: var(--text-muted);"></p>
+                </div>
+                <div class="leadership-group" id="modal-leadership-group">
+                    <!-- Advisor/Chair details -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/navbar.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/cinematic-hero.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            initCinematicHero('branches');
+            const UPLOADS_BASE = BACKEND_BASE + '/uploads/';
+            let branches = [];
+
+            const defaultBranches = [];
+
+            let branchDataForMap = [];
+            let mapScale = 1;
+            const mapZoomMin = 1;
+            const mapZoomMax = 2.4;
+
+            function placeBranchDots() {
+                const layer = document.getElementById('branch-dots-layer');
+                if (!layer || !branchDataForMap.length) return;
+                const N=18.45, S=11.50, W=74.05, E=78.60;
+                layer.innerHTML = '';
+                let count = 0;
+                branchDataForMap.forEach(b => {
+                    const lat = parseFloat(b.latitude ?? b.lat ?? b.location?.lat ?? b.coordinates?.[1]);
+                    const lng = parseFloat(b.longitude ?? b.lng ?? b.location?.lng ?? b.coordinates?.[0]);
+                    if (!lat || !lng || lat < S || lat > N || lng < W || lng > E) return;
+                    const rawTop  = (N - lat) / (N - S);
+                    const rawLeft = (lng - W) / (E - W);
+                    const topPct  = (0.06 + rawTop  * 0.88) * 100;
+                    const leftPct = (0.10 + rawLeft * 0.80) * 100;
+                    const dot = document.createElement('div');
+                    dot.className = 'b-dot';
+                    dot.style.top  = topPct  + '%';
+                    dot.style.left = leftPct + '%';
+                    dot.innerHTML  = `<div class="b-dot-circle"></div><div class="branch-tooltip">${b.name}</div>`;
+                    dot.addEventListener('click', () => {
+                        openBranchModal(b._id || b.name);
+                        const existing = dot.querySelector('.branch-popup');
+                        if (existing) existing.remove();
+                        const popup = document.createElement('div');
+                        popup.className = 'branch-popup visible';
+                        popup.innerHTML = `
+                            <strong>${b.name || b.instituteName || 'Student Branch'}</strong>
+                            <span>📍 ${b.location || b.city || 'Bangalore'}</span>
+                        `;
+                        dot.appendChild(popup);
+                        setTimeout(() => popup.remove(), 2800);
+                    });
+                    layer.appendChild(dot);
+                    count++;
+                });
+                const lbl = document.getElementById('branch-count-label');
+                if (lbl) lbl.textContent = count + (count === 1 ? ' Branch Active' : ' Branches Active');
+            }
+
+            const branchMapWrapper = document.getElementById('karnataka-img-wrapper');
+            if (branchMapWrapper) {
+                branchMapWrapper.addEventListener('wheel', (event) => {
+                    event.preventDefault();
+                    mapScale = Math.min(mapZoomMax, Math.max(mapZoomMin, mapScale - event.deltaY * 0.0012));
+                    branchMapWrapper.style.transform = `scale(${mapScale})`;
+                }, { passive: false });
+            }
+            window.placeBranchDots = placeBranchDots;
+
+            const init = async () => {
+                // 1. Hero & Descs (Hybrid)
+                try {
+                    const res = await API.getPageContent('branches');
+                    if (res && res.status === 'success' && res.data.length > 0) {
+                        res.data.forEach(d => {
+                            if (d.section === 'map-desc') document.getElementById('map-desc').textContent = d.content;
+                            if (d.section === 'list-desc') document.getElementById('list-desc').textContent = d.content;
+                        });
+                    }
+                } catch (e) {}
+
+                // 2. Branches (Hybrid)
+                try {
+                    const res = await API.getBranches();
+                    branches = (res && res.data && res.data.length > 0) ? res.data : [];
+                    renderBranches();
+                    branchDataForMap = branches;
+                    const mapImg = document.getElementById('karnataka-img');
+                    if (mapImg && mapImg.complete) placeBranchDots();
+                    // onload on <img> handles the case where image loads after this runs
+
+                    // 3. Handle Deep Linking (from Search)
+                    const params = new URLSearchParams(window.location.search);
+                    const branchId = params.get('id');
+                    if (branchId) {
+                        setTimeout(() => window.openBranchModal(branchId), 500);
+                    }
+                } catch (e) { console.error(e); }
+            };
+
+            const renderBranches = () => {
+                document.getElementById('branches-container').innerHTML = branches.map(b => {
+                    const logo = b.institutionImage && (b.institutionImage.startsWith('http') || b.institutionImage.startsWith('assets')) ? b.institutionImage : UPLOADS_BASE + b.institutionImage;
+                    const est = b.formationDate ? new Date(b.formationDate).getFullYear() : null;
+                    const members = b.memberCount || 0;
+                    const s = b.socialLinks || {};
+                    const soc = (url, icon) => url ? `<a href="${url}" target="_blank" rel="noopener noreferrer" class="bsoc" onclick="event.stopPropagation()"><i class="${icon}"></i></a>` : '';
+                    const socials = [soc(s.linkedin, 'fab fa-linkedin-in'), soc(s.instagram, 'fab fa-instagram'), soc(s.facebook, 'fab fa-facebook-f')].join('');
+                    const footLeft = socials || (members ? `<span class="bstat-mini"><i class="fas fa-users"></i> ${members} Members</span>` : '');
+                    return `
+                    <div class="branch-card-pro" onclick="openBranchModal('${b._id || b.name}')">
+                        <div class="branch-logo-stage">
+                            ${est ? `<span class="branch-est-badge">Est. ${est}</span>` : ''}
+                            <img class="branch-logo" src="${logo}" alt="${b.name}" onerror="this.src='https://via.placeholder.com/300x200?text=IEEE+TEMS'">
+                        </div>
+                        <div class="branch-card-info">
+                            <h3 class="branch-card-name">${b.name}</h3>
+                            <div class="branch-card-loc"><i class="fas fa-map-marker-alt"></i> ${b.city}</div>
+                            <div class="branch-card-foot">
+                                <div class="branch-card-socials">${footLeft}</div>
+                                <span class="branch-card-cta">View Branch <i class="fas fa-arrow-right"></i></span>
+                            </div>
+                        </div>
+                    </div>`;
+                }).join('');
+            };
+
+            window.openBranchModal = (id) => {
+                const b = branches.find(x => (x._id === id || x.name === id));
+                if (!b) return;
+
+                // Cover image
+                const img = document.getElementById('modal-branch-img');
+                const coverRaw = b.institutionImage || '';
+                img.src = coverRaw.startsWith('http') ? coverRaw : UPLOADS_BASE + coverRaw;
+                img.onerror = () => { img.style.display = 'none'; };
+
+                // Name
+                document.getElementById('modal-branch-name').textContent = b.name;
+
+                // Meta row: city + formation date + member count + website
+                const formattedDate = b.formationDate
+                    ? new Date(b.formationDate).toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'})
+                    : '';
+                document.getElementById('modal-branch-meta').innerHTML = `
+                    <span style="display:inline-flex;align-items:center;gap:6px;margin-right:16px;">
+                        <i class="fas fa-map-marker-alt" style="color:var(--ieee-blue);"></i> ${b.city}
+                    </span>
+                    ${formattedDate ? `<span style="display:inline-flex;align-items:center;gap:6px;margin-right:16px;">
+                        <i class="fas fa-calendar-alt" style="color:var(--ieee-blue);"></i> Est. ${formattedDate}
+                    </span>` : ''}
+                    ${b.memberCount ? `<span style="display:inline-flex;align-items:center;gap:6px;margin-right:16px;">
+                        <i class="fas fa-users" style="color:var(--ieee-blue);"></i> ${b.memberCount} Members
+                    </span>` : ''}
+                    ${b.website ? `<a href="${b.website}" target="_blank" style="display:inline-flex;align-items:center;gap:6px;color:var(--ieee-blue);text-decoration:none;font-weight:600;">
+                        <i class="fas fa-globe"></i> Visit Website
+                    </a>` : ''}
+                `;
+
+                // Social links
+                const sl = b.socialLinks || {};
+                const socialHtml = [
+                    sl.linkedin ? `<a href="${sl.linkedin}" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#0077b5;color:white;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:600;">
+                        <i class="fab fa-linkedin"></i> LinkedIn</a>` : '',
+                    sl.instagram ? `<a href="${sl.instagram}" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366);color:white;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:600;">
+                        <i class="fab fa-instagram"></i> Instagram</a>` : ''
+                ].filter(Boolean).join('');
+                document.getElementById('modal-branch-social').innerHTML = socialHtml
+                    ? `<div style="display:flex;gap:10px;flex-wrap:wrap;">${socialHtml}</div>` : '';
+
+                // Description
+                document.getElementById('modal-branch-desc').textContent = b.description || "Active TEMS student chapter driving innovation and leadership excellence within the campus.";
+
+                // Leadership group
+                const leadershipEl = document.getElementById('modal-leadership-group');
+                const hasAdvisor = b.advisor && (b.advisor.name || b.advisor.photo);
+                const hasChair = b.chair && (b.chair.name || b.chair.photo);
+                if (hasAdvisor || hasChair) {
+                    const leaderCard = (person, role) => {
+                        const photoSrc = person.photo
+                            ? (person.photo.startsWith('http') ? person.photo : UPLOADS_BASE + person.photo)
+                            : null;
+                        return `
+                            <div class="modal-leader-card">
+                                ${photoSrc
+                                    ? `<img src="${photoSrc}" alt="${person.name || role}" class="modal-leader-photo" onerror="this.style.display='none'">`
+                                    : `<div class="modal-leader-photo modal-leader-placeholder"><i class="fas fa-user"></i></div>`
+                                }
+                                <div class="modal-leader-info">
+                                    <span class="modal-leader-role">${role}</span>
+                                    ${person.name ? `<span class="modal-leader-name">${person.name}</span>` : ''}
+                                    ${person.linkedin ? `<a href="${person.linkedin}" target="_blank" class="modal-leader-linkedin"><i class="fab fa-linkedin"></i></a>` : ''}
+                                </div>
+                            </div>`;
+                    };
+                    leadershipEl.innerHTML = `
+                        <h3 style="font-size:1rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--ieee-blue); margin:24px 0 16px;">Branch Leadership</h3>
+                        <div class="modal-leaders-row">
+                            ${hasAdvisor ? leaderCard(b.advisor, 'Branch Advisor') : ''}
+                            ${hasChair ? leaderCard(b.chair, 'Branch Chair') : ''}
+                        </div>`;
+                } else {
+                    leadershipEl.innerHTML = '';
+                }
+
+                document.getElementById('branch-modal').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            };
+
+            document.getElementById('close-branch-modal').onclick = () => {
+                document.getElementById('branch-modal').classList.remove('active');
+                document.body.style.overflow = '';
+            };
+
+            init();
+        });
+    </script>
+</body>
+</html>

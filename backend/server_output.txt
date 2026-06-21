@@ -1,0 +1,18 @@
+[Config] PORT=5000 MONGO=mongodb://localhost:27017/ieee-tems
+C:\Users\rushi\Desktop\ieee-tems-bangalore (2)\ieee-tems-bangalore\backend\node_modules\bcryptjs\dist\bcrypt.js:189
+            throw Error("Illegal arguments: "+(typeof s)+', '+(typeof salt));
+            ^
+
+Error: Illegal arguments: undefined, string
+    at bcrypt.hashSync (C:\Users\rushi\Desktop\ieee-tems-bangalore (2)\ieee-tems-bangalore\backend\node_modules\bcryptjs\dist\bcrypt.js:189:19)
+    at Object.<anonymous> (C:\Users\rushi\Desktop\ieee-tems-bangalore (2)\ieee-tems-bangalore\backend\controllers\authController.js:7:26)
+    at Module._compile (node:internal/modules/cjs/loader:1358:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1416:10)
+    at Module.load (node:internal/modules/cjs/loader:1208:32)
+    at Module._load (node:internal/modules/cjs/loader:1024:12)
+    at Module.require (node:internal/modules/cjs/loader:1233:19)
+    at require (node:internal/modules/helpers:179:18)
+    at Object.<anonymous> (C:\Users\rushi\Desktop\ieee-tems-bangalore (2)\ieee-tems-bangalore\backend\routes\authRoutes.js:2:19)
+    at Module._compile (node:internal/modules/cjs/loader:1358:14)
+
+Node.js v20.13.1

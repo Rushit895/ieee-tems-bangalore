@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IEEE TEMS Bangalore Section | Official Portal</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/global.css?v=2">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/homepage.css?v=4">
+    <link rel="stylesheet" href="css/footer.css">
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <!-- Ticker -->
+    <div class="ticker-wrapper" id="ticker-container">
+        <div class="ticker-content">
+            <span class="ticker-label">LATEST UPDATES:</span>
+            <div class="ticker-scroll">
+                <div class="ticker-text-css" id="ticker-text">Welcome to IEEE TEMS Bangalore Section • Advance your career with our management resources • Join the global technology network today.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Slider (Hybrid) -->
+    <section class="hero-slider" id="hero-slider-container">
+        <!-- Default Slide 1 -->
+        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2000');">
+            <div class="container slide-content">
+                <span class="section-label" style="color: #fff; opacity: 0.8;">Leadership • Innovation • Excellence</span>
+                <h1>Engineering Future <br><span>Strategic Leaders</span></h1>
+                <p>IEEE Technology and Engineering Management Society (TEMS) bridges technical excellence with strategic management vision.</p>
+                <div class="hero-btns">
+                    <a href="join-ieee.html" class="btn btn-gold">Become a Member</a>
+                    <a href="events.html" class="btn btn-outline-white">Explore Events</a>
+                </div>
+            </div>
+        </div>
+        <!-- Scroll Indicator -->
+        <div class="hero-scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- About Intro (Hybrid) -->
+    <section class="section-spacing reveal" id="about-intro-section">
+        <div class="container split-layout">
+            <div class="about-text text-container-left" id="about-intro-container">
+                <span class="section-label">ABOUT</span>
+                <h2 class="ieee-heading" id="about-intro-title">About <span>IEEE TEMS</span></h2>
+                <p class="ieee-description" id="about-intro-content">The Technology and Engineering Management Society (TEMS) is dedicated to advancing management and leadership skills. The Bangalore Section connects professionals across India's silicon valley hub, providing a platform for growth, networking, and excellence.</p>
+                <a href="about.html" class="learn-more" id="about-intro-link">Learn More →</a>
+            </div>
+            <div class="stat-grid" id="stat-grid">
+            </div>
+        </div>
+    </section>
+
+    <!-- Karnataka Presence (Hybrid) -->
+    <section class="video-presence" id="presence-section">
+        <video autoplay muted loop playsinline class="video-bg" id="presence-video-bg">
+            <source src="assets/v24.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+        <div class="container" style="position:relative; z-index:5;">
+            <div class="video-glass-box text-container-left">
+                <span class="section-label" style="color:#fff;">OUR PRESENCE</span>
+                <h2 class="ieee-heading" style="font-size:2.75rem; color:#fff;" id="presence-title">Empowering Innovation in <span>Karnataka</span></h2>
+                <p class="ieee-description" style="color: #ffffff !important;" id="presence-text">From global R&D centers to thriving startups, Bangalore is the heart of India's technology revolution. IEEE TEMS Bangalore connects this ecosystem with the people, ideas, and leadership shaping its future.</p>
+                <a href="about.html" class="btn btn-gold">Explore Community</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chair Message (Hybrid) -->
+    <section class="section-spacing reveal" id="chair-section-wrapper" style="background:#fdfdfd;">
+        <div class="container chair-layout" id="chair-section" style="display: grid; grid-template-columns: 4fr 8fr; gap: 40px;">
+            <div class="chair-image-box" id="chair-img-container">
+                <img src="assets/chair.png" alt="Chair" class="chair-img" id="chair-img">
+            </div>
+            <div class="chair-content text-container-left">
+                <span class="section-label">MESSAGE FROM THE CHAIR</span>
+                <h2 class="ieee-heading" id="chair-title">Leading with <span>Purpose</span></h2>
+                <p class="ieee-description" style="font-style: italic;" id="chair-message"></p>
+                <div id="chair-info" style="margin-bottom: 24px;">
+                    <strong id="chair-name" style="display: block; color: var(--ieee-navy); font-size: 1.1rem;"></strong>
+                    <span id="chair-designation" style="color: var(--text-muted); font-size: 0.9rem;"></span>
+                </div>
+                <a href="about.html#chair" class="btn btn-primary">Read Full Message</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- GIF Block (Hybrid) -->
+    <section class="gif-block-section reveal" id="gif-block-section" style="display:none;">
+        <div class="container">
+            <div class="gif-block-layout">
+                <div class="gif-block-media" id="gif-block-media">
+                    <img id="gif-block-img" src="" alt="Innovation in Motion" style="width:100%;border-radius:12px;display:block;">
+                </div>
+                <div class="gif-block-content">
+                    <span class="section-label">Innovation in Motion</span>
+                    <h2 class="ieee-heading" id="gif-block-title"></h2>
+                    <p class="ieee-description" id="gif-block-desc"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upcoming Events (Hybrid) -->
+    <section class="section-spacing bg-light reveal">
+        <div class="container">
+            <div class="flex-between" style="margin-bottom: var(--space-4);">
+                <h2 class="ieee-heading" style="margin-bottom:0;">Upcoming <span>Events</span></h2>
+                <div class="scroll-nav" id="event-nav">
+                    <button class="scroll-btn" onclick="scrollEvents(-400)"><i class="fas fa-chevron-left"></i></button>
+                    <button class="scroll-btn" onclick="scrollEvents(400)"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="horizontal-scroll-wrap" id="event-slider">
+                <!-- Loaded Dynamically -->
+            </div>
+            <div class="text-center" style="margin-top:var(--space-6);">
+                <a href="events.html" class="btn btn-primary" id="view-all-events-btn">View All Events</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Current Updates (Hybrid) -->
+    <section class="section-spacing reveal">
+        <div class="container">
+            <div class="text-container text-container-centered mb-64">
+                <span class="section-label">LATEST INSIGHTS</span>
+                <h2 class="ieee-heading">Current <span>Updates</span></h2>
+                <p class="ieee-description" id="updates-desc">Stay updated with the latest insights, announcements, and thought leadership from IEEE TEMS Bangalore</p>
+            </div>
+            <div id="home-updates-list" class="grid-12">
+                <!-- Loaded Dynamically -->
+            </div>
+            <div class="text-center" style="margin-top:var(--space-8);">
+                <a href="blogs.html" class="btn btn-primary" id="view-all-updates-btn">Explore All Updates</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Preview (Hybrid) -->
+    <section class="section-spacing bg-light reveal">
+        <div class="container">
+            <div class="text-container text-container-centered mb-64">
+                <h2 class="ieee-heading">Gallery <span>Preview</span></h2>
+            </div>
+            <div class="gallery-grid-clean" id="gallery-preview">
+                <!-- Loaded Dynamically -->
+            </div>
+            <div class="text-center" style="margin-top:var(--space-6);">
+                <a href="gallery.html" class="btn btn-primary" id="view-full-gallery-btn">View Full Gallery</a>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/navbar.js?v=2"></script>
+    <script src="js/api.js?v=2"></script>
+    <script src="js/search.js?v=2"></script>
+    <script src="js/main.js?v=2"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const UPLOADS_BASE = BACKEND_BASE + '/uploads/';
+            
+            // Fallback Data
+            const defaultEvents = [];
+            const defaultBlogs = [];
+
+            // Ticker (Hybrid)
+            try {
+                const res = await API.getHome('live-updates');
+                if (res && res.status === 'success' && res.data.length > 0) {
+                    const active = res.data.filter(u => u.active).map(u => u.text);
+                    if (active.length > 0) document.getElementById('ticker-text').textContent = active.join(' • ');
+                }
+            } catch (e) {}
+
+            // Hero (Hybrid)
+            try {
+                const res = await API.getHome('hero');
+                if (res && res.status === 'success' && res.data.length > 0) {
+                    const heroContainer = document.getElementById('hero-slider-container');
+                    let slidesHtml = '';
+                    let navHtml = '<div class="slider-nav">';
+                    res.data.sort((a,b) => a.order - b.order).forEach((slide, idx) => {
+                        let imgUrl;
+                        if (slide.image.startsWith('http')) {
+                            imgUrl = slide.image;
+                        } else if (slide.image.startsWith('/uploads/')) {
+                            imgUrl = `${slide.image}`;
+                        } else {
+                            imgUrl = `${UPLOADS_BASE}${slide.image}`;
+                        }
+                        const formattedTitle = slide.title.includes('<span>') ? slide.title : slide.title.replace(/<br>/i, '<br><span>') + '</span>';
+                        slidesHtml += `
+                            <div class="slide ${idx === 0 ? 'active' : ''}" style="background-image: url('${imgUrl}');">
+                                <div class="container slide-content">
+                                    <span class="section-label" style="color: #fff; opacity: 0.8;">${slide.subtitle || ''}</span>
+                                    <h1>${formattedTitle}</h1>
+                                    <p>${slide.content || ''}</p>
+                                    <div class="hero-btns">
+                                        ${slide.buttonText ? `<a href="${slide.buttonLink || '#'}" class="btn btn-gold">${slide.buttonText}</a>` : ''}
+                                        <a href="events.html" class="btn btn-outline-white">Explore Events</a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        navHtml += `<div class="dot ${idx === 0 ? 'active' : ''}" onclick="setSlide(${idx})"></div>`;
+                    });
+                    navHtml += '</div>';
+                    navHtml += `<div class="hero-scroll-indicator"><span>Scroll</span><div class="scroll-line"></div></div>`;
+                    heroContainer.innerHTML = slidesHtml + navHtml;
+                    window.slides = document.querySelectorAll('.slide');
+                    window.dots = document.querySelectorAll('.dot');
+                    window.curSlide = 0;
+                    splitHeroWords();
+                    clearInterval(window.slideInterval);
+                    window.slideInterval = setInterval(() => window.setSlide(window.curSlide + 1), 5000);
+                }
+            } catch (e) {}
+
+            // About Intro (Hybrid)
+            try {
+                const res = await API.getHome('about-intro');
+                if (res && res.status === 'success' && res.data.length > 0) {
+                    const data = res.data[0];
+                    document.getElementById('about-intro-title').innerHTML = data.title.includes('<span>') ? data.title : data.title.replace(' ', ' <span>') + '</span>';
+                    document.getElementById('about-intro-content').textContent = data.content;
+                    document.getElementById('about-intro-link').textContent = (data.linkText || 'Learn More') + ' →';
+                    document.getElementById('about-intro-link').href = data.linkUrl || 'about.html';
+                }
+            } catch (e) {}
+
+            // Stats (Hybrid)
+            try {
+                const res = await API.getHome('counters');
+                if (res && res.status === 'success' && res.data.length > 0) {
+                    document.getElementById('stat-grid').innerHTML = res.data.map(item => `
+                        <div class="stat-card"><h3 class="counter" data-target="${item.value}">0</h3><p>${item.label}</p></div>
+                    `).join('');
+                    if (window.animateCounters) window.animateCounters();
+                }
+            } catch (e) {}
+
+            // Karnataka Presence (Hybrid)
+            try {
+                const res = await API.getHome('karnataka');
+                if (res && res.status === 'success' && res.data.length > 0) {
+                    const data = res.data[0];
+                    const presenceTitle = data.title.includes('Karnataka')
+                        ? data.title.replace('Karnataka', '<span>Karnataka</span>')
+                        : data.title.replace(/Bangalore|Karnataka/g, w => `<span>${w}</span>`);
+                    document.getElementById('presence-title').innerHTML = presenceTitle;
+                    document.getElementById('presence-text').textContent = data.content;
+
+                    if (data.image) {
+                        // Resolve full URL: handle /uploads/file, bare filename, or full http URL
+                        let mediaUrl;
+                        if (data.image.startsWith('http')) {
+                            mediaUrl = data.image;
+                        } else if (data.image.startsWith('/uploads/')) {
+                            mediaUrl = `${data.image}`;
+                        } else {
+                            mediaUrl = `${UPLOADS_BASE}${data.image}`;
+                        }
+
+                        console.log('[Karnataka] Resolved media URL:', mediaUrl);
+
+                        const isVideo = /\.(mp4|webm|mov)$/i.test(mediaUrl);
+                        const section = document.getElementById('presence-section');
+                        const video = document.getElementById('presence-video-bg');
+
+                        if (isVideo) {
+                            // Show video, hide background image
+                            video.querySelector('source').src = mediaUrl;
+                            video.load();
+                            video.style.display = 'block';
+                            section.style.backgroundImage = 'none';
+                            video.play().catch(() => {});
+                        } else {
+                            // Show image as background, hide video
+                            video.style.display = 'none';
+                            section.style.backgroundImage =
+                                `linear-gradient(rgba(10,42,67,0.75), rgba(10,42,67,0.85)), url('${mediaUrl}')`;
+                            section.style.backgroundSize = 'cover';
+                            section.style.backgroundPosition = 'center';
+                        }
+                    }
+                }
+            } catch (e) { console.warn('[Karnataka] Failed to load presence data:', e); }
+
+            // Chair Message (Hybrid)
+            try {
+                const res = await API.getHome('chair-message');
+                if (res && res.status === 'success' && res.data.length > 0) {
+                    const chair = res.data[0];
+                    document.getElementById('chair-message').textContent = `"${chair.message}"`;
+                    document.getElementById('chair-name').textContent = chair.name;
+                    document.getElementById('chair-designation').textContent = chair.designation;
+                    if (chair.image) {
+                        const imgUrl = chair.image.startsWith('http') ? chair.image : `${UPLOADS_BASE}${chair.image}`;
+                        document.getElementById('chair-img').src = imgUrl;
+                        document.getElementById('chair-img-container').style.display = 'block';
+                        document.getElementById('chair-section').style.gridTemplateColumns = '4fr 8fr';
+                    } else {
+                        document.getElementById('chair-img-container').style.display = 'none';
+                        document.getElementById('chair-section').style.gridTemplateColumns = '1fr';
+                    }
+                } else {
+                    document.getElementById('chair-section-wrapper').style.display = 'none';
+                }
+            } catch (e) { document.getElementById('chair-section-wrapper').style.display = 'none'; }
+
+            // GIF Block (Hybrid)
+            try {
+                const res = await API.getHome('gif-section');
+                if (res && res.status === 'success' && res.data.length > 0) {
+                    const d = res.data[0];
+                    const gifUrl = d.gifUrl || '';
+                    let imgUrl;
+                    if (gifUrl.startsWith('http')) {
+                        imgUrl = gifUrl;
+                    } else if (gifUrl.startsWith('/uploads/')) {
+                        imgUrl = `${gifUrl}`;
+                    } else if (gifUrl) {
+                        imgUrl = `/uploads/${gifUrl}`;
+                    } else {
+                        imgUrl = '';
+                    }
+                    const mediaEl = document.getElementById('gif-block-media');
+                    const isVideo = imgUrl && /\.(mp4|webm|mov)$/i.test(imgUrl);
+                    if (isVideo) {
+                        mediaEl.innerHTML = `<video src="${imgUrl}" autoplay loop muted playsinline style="width:100%;border-radius:12px;display:block;"></video>`;
+                    } else if (imgUrl) {
+                        mediaEl.innerHTML = `<img src="${imgUrl}" alt="${d.title || 'Innovation in Motion'}" style="width:100%;border-radius:12px;display:block;">` ;
+                    }
+                    document.getElementById('gif-block-title').textContent = d.title || '';
+                    document.getElementById('gif-block-desc').textContent = d.description || '';
+                    document.getElementById('gif-block-section').style.display = 'block';
+                }
+            } catch (e) {}
+
+            // Upcoming Events (Hybrid)
+            const categoryIcons = { 'Workshops': 'fas fa-tools', 'Conferences': 'fas fa-microphone-alt', 'Talks': 'fas fa-chalkboard-teacher', 'AGM': 'fas fa-file-signature', 'Competitions': 'fas fa-trophy' };
+            
+            const renderEvents = (data) => {
+                const now = new Date();
+                const upcoming = data.filter(e => new Date(e.date) >= now).sort((a,b) => new Date(a.date) - new Date(b.date)).slice(0, 5);
+                const items = upcoming.length > 0 ? upcoming : defaultEvents;
+                
+                if (items.length === 0) { document.getElementById('event-slider').innerHTML = ''; return; }
+                document.getElementById('event-slider').innerHTML = items.map(e => {
+                    const icon = categoryIcons[e.category] || 'fas fa-calendar-star';
+                    const imgUrl = e.image ? (e.image.startsWith('http') ? e.image : `${UPLOADS_BASE}${e.image}`) : null;
+                    const dateStr = new Date(e.date).toLocaleDateString('en-US', {month:'short', day:'2-digit', year:'numeric'});
+                    const bgStyle = imgUrl ? `background-image:url('${imgUrl}')` : 'background:linear-gradient(135deg,#0b2a4a,#10416b)';
+                    return `
+                        <a href="events.html?id=${e._id || ''}" class="event-card-sharp">
+                            <div class="event-card-bg" style="${bgStyle}"></div>
+                            <div class="event-card-shade"></div>
+                            <span class="event-cat-chip"><i class="${icon}"></i> ${e.category || 'Event'}</span>
+                            <div class="event-card-glass">
+                                <span class="event-date"><i class="far fa-calendar"></i> ${dateStr}</span>
+                                <h3>${e.title}</h3>
+                            </div>
+                        </a>
+                    `;
+                }).join('');
+            };
+
+            try {
+                const res = await API.getEvents();
+                renderEvents((res && res.status === 'success' && res.data.length > 0) ? res.data : []);
+            } catch (e) { renderEvents([]); }
+
+            // Gallery Preview (Hybrid)
+            try {
+                const res = await API.getHome('gallery');
+                const galleryData = (res && res.status === 'success' && res.data.length > 0) ? res.data.slice(0, 6) : [];
+                if (galleryData.length === 0) { document.getElementById('gallery-preview').innerHTML = ''; return; }
+                document.getElementById('gallery-preview').innerHTML = galleryData.map(img => `
+                    <div class="gallery-item-clean"><img src="${img.imageUrl.startsWith('http') ? img.imageUrl : UPLOADS_BASE + img.imageUrl}" loading="lazy"></div>
+                `).join('');
+            } catch (e) {}
+
+            // Updates/Blogs (Hybrid)
+            const renderBlogs = (data) => {
+                const items = data.slice(0, 3);
+                if (items.length === 0) { document.getElementById('home-updates-list').innerHTML = ''; return; }
+                document.getElementById('home-updates-list').innerHTML = items.map(blog => {
+                    const imgUrl = blog.image ? (blog.image.startsWith('http') ? blog.image : UPLOADS_BASE + blog.image) : null;
+                    const bgStyle = imgUrl ? `background-image:url('${imgUrl}')` : 'background:linear-gradient(135deg,#0b2a4a,#10416b)';
+                    const href = blog.articleUrl || '#';
+                    const target = blog.articleUrl ? 'target="_blank" rel="noopener noreferrer"' : '';
+                    return `
+                    <a class="blog-card col-4 col-md-6 col-sm-12 reveal" href="${href}" ${target}>
+                        <div class="blog-card-bg" style="${bgStyle}"></div>
+                        <div class="blog-shade"></div>
+                        <span class="blog-category-tag">${blog.category || 'Update'}</span>
+                        <div class="blog-glass">
+                            <span class="blog-date"><i class="far fa-calendar-alt"></i> ${new Date(blog.date).toLocaleDateString()}</span>
+                            <h3>${blog.title}</h3>
+                            ${blog.articleUrl ? `<span class="blog-read-more">Read More &rarr;</span>` : ''}
+                        </div>
+                    </a>
+                `}).join('');
+                if (window.scrollReveal) window.scrollReveal();
+            };
+
+            try {
+                const res = await API.getBlogs();
+                renderBlogs((res && res.status === 'success' && res.data.length > 0) ? res.data : []);
+            } catch (e) { renderBlogs([]); }
+        });
+
+        function scrollEvents(dist) { document.getElementById('event-slider').scrollBy({left: dist, behavior: 'smooth'}); }
+
+        // ── Hero Animation Engine ────────────────────────────────────────
+        function splitHeroWords() {
+            document.querySelectorAll('.slide-content h1').forEach(h1 => {
+                // preserve <br> and <span> tags, wrap plain text words
+                h1.innerHTML = h1.innerHTML.replace(/(<[^>]+>)|([^<\s][^<]*)/g, (match, tag, text) => {
+                    if (tag) return tag;
+                    return text.split(' ').map(w => w.trim() ? `<span class="word">${w}</span>` : ' ').join(' ');
+                });
+            });
+            assignWordDelays();
+        }
+
+        function assignWordDelays() {
+            document.querySelectorAll('.slide.active .slide-content h1 .word').forEach((w, i) => {
+                w.style.animationDelay = (0.6 + i * 0.1) + 's';
+            });
+        }
+
+        window.setSlide = function(n) {
+            const slides = document.querySelectorAll('.slide');
+            const dots   = document.querySelectorAll('.dot');
+            if (!slides.length) return;
+            const total = slides.length;
+            const prev  = window.curSlide || 0;
+            const next  = ((n % total) + total) % total;
+            if (prev === next) return;
+
+            // Exit current
+            slides[prev].classList.remove('active');
+            slides[prev].classList.add('exiting');
+            setTimeout(() => slides[prev].classList.remove('exiting'), 1200);
+
+            // Enter next
+            slides[next].classList.add('active');
+            // Reset & re-trigger animation
+            slides[next].style.animation = 'none';
+            slides[next].offsetHeight; // reflow
+            slides[next].style.animation = '';
+
+            // Stagger word delays for new slide
+            slides[next].querySelectorAll('.slide-content h1 .word').forEach((w, i) => {
+                w.style.animationDelay = (0.6 + i * 0.1) + 's';
+            });
+
+            dots.forEach(d => d.classList.remove('active'));
+            if (dots[next]) dots[next].classList.add('active');
+
+            window.curSlide = next;
+        };
+
+        // Init word split on default static slide too
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                splitHeroWords();
+                assignWordDelays();
+            }, 100);
+        });
+    </script>
+</body>
+</html>

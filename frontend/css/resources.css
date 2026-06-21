@@ -1,0 +1,325 @@
+/* --- RESOURCE LIBRARY HERO --- */
+.resources-hero {
+    position: relative;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    /* Strong dark gradient — white text always readable */
+    background: linear-gradient(
+        to right,
+        rgba(0, 40, 85, 0.95) 0%,
+        rgba(0, 98, 155, 0.88) 100%
+    ), #002855;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Gold bottom accent — matches navbar */
+.resources-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: #C69214;
+    z-index: 2;
+}
+
+.resources-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    padding: 88px 24px 80px;
+    animation: resourcesHeroIn 0.65s ease both;
+}
+
+@keyframes resourcesHeroIn {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* "ASSET REPOSITORY" label */
+.resources-hero-label {
+    display: inline-block;
+    color: #C69214;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+}
+
+/* Main heading — always white, no dark override */
+.resources-hero-content h1 {
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: #ffffff;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+.resources-hero-content h1 span { color: #C69214; }
+
+/* Subtext */
+.resources-hero-content p {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.75;
+    font-weight: 400;
+}
+
+@media (max-width: 768px) {
+    .resources-hero-content { padding: 64px 20px 56px; }
+    .resources-hero-content h1 { font-size: 2rem; }
+}
+
+/* Category Filters */
+.filter-container-resource {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+}
+
+.filter-btn-resource {
+    padding: 10px 24px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn-resource:hover {
+    border-color: var(--ieee-blue);
+    color: var(--ieee-blue);
+}
+
+.filter-btn-resource.active {
+    background: var(--ieee-blue);
+    color: #ffffff;
+    border-color: var(--ieee-blue);
+    box-shadow: 0 4px 12px rgba(0, 98, 155, 0.2);
+}
+
+/* Logo Download Grid */
+.resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.resource-card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 102, 204, 0.15);
+    border-radius: 12px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+.resource-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0, 40, 85, 0.08);
+    border-color: var(--ieee-blue);
+}
+
+.logo-preview-box {
+    width: 100%;
+    height: 180px;
+    background: #f8fafc;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin-bottom: 24px;
+    border: 1px solid #f1f5f9;
+}
+
+.logo-preview-box img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.resource-card h3 {
+    font-size: 1.25rem;
+    color: var(--ieee-royal-blue);
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.resource-card .category-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--ieee-blue);
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+}
+
+.resource-card p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 24px;
+    min-height: 2.7rem;
+}
+
+.resource-meta {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 24px;
+    font-size: 0.8rem;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.btn-download-resource {
+    width: 100%;
+    padding: 14px;
+    background: var(--ieee-blue);
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 98, 155, 0.2);
+}
+
+.btn-download-resource:hover {
+    background: var(--ieee-royal-blue);
+    box-shadow: 0 6px 15px rgba(0, 40, 85, 0.3);
+    transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+    .resource-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ── Brand Assets / Logo Downloads ── */
+.brand-section {
+    margin-bottom: 48px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.brand-section-header {
+    background: #0a2a4a;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 14px 24px;
+    text-transform: uppercase;
+}
+
+.brand-logos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0;
+    background: #ffffff;
+}
+
+.brand-logo-card {
+    border-right: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-logo-card:last-child {
+    border-right: none;
+}
+
+.brand-logo-preview {
+    background: #f8fafc;
+    padding: 32px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 140px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.brand-logo-preview img {
+    max-width: 100%;
+    max-height: 80px;
+    object-fit: contain;
+}
+
+.brand-logo-preview--dark {
+    background: #0a2a4a;
+}
+
+.brand-logo-preview--blue {
+    background: #f0f7ff;
+}
+
+.brand-logo-info {
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.brand-logo-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #334155;
+}
+
+.btn-brand-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #00629b;
+    color: #ffffff;
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.btn-brand-download:hover {
+    background: #004f7c;
+    color: #ffffff;
+}
+
+@media (max-width: 768px) {
+    .brand-logos-grid {
+        grid-template-columns: 1fr;
+    }
+    .brand-logo-card {
+        border-right: none;
+        border-bottom: 1px solid #e2e8f0;
+    }
+}

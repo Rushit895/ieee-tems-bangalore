@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | IEEE TEMS Bangalore Section</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <style>
+        /* ── LIGHTBOX ── */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.92);
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            flex-direction: column;
+            gap: 16px;
+        }
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 80vh;
+            border-radius: 8px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.6);
+            animation: zoomIn 0.3s ease;
+            object-fit: contain;
+        }
+        .lightbox-caption {
+            color: rgba(255,255,255,0.85);
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-align: center;
+            max-width: 600px;
+            padding: 0 24px;
+        }
+        @keyframes zoomIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to   { transform: scale(1);   opacity: 1; }
+        }
+        .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+        .close-lightbox:hover { color: var(--ieee-gold); }
+
+        /* ── GALLERY FILTER SECTION ── */
+        .gallery-filter-section {
+            background: var(--bg-light);
+            padding: 0 0 80px;
+        }
+
+        /* ── FILTER BAR ── */
+        .gallery-filter-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            padding: 24px 32px;
+            background: var(--white);
+            border-bottom: 1px solid var(--ieee-grey);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .filter-btn {
+            border: 1.5px solid var(--ieee-royal-blue);
+            background: var(--white);
+            color: var(--ieee-royal-blue);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            background: var(--ieee-royal-blue);
+            color: var(--white);
+        }
+
+        .filter-btn.active {
+            background: var(--ieee-royal-blue);
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(0,40,85,0.25);
+        }
+
+        .gallery-count {
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .gallery-count span {
+            color: var(--ieee-blue);
+        }
+
+        /* ── PHOTO GRID ── */
+        .gallery-grid-wrap {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 40px 32px 0;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        /* Vary card heights for visual interest */
+        .gallery-card:nth-child(3n+1) { aspect-ratio: 4/3; }
+        .gallery-card:nth-child(3n+2) { aspect-ratio: 3/4; }
+        .gallery-card:nth-child(3n+3) { aspect-ratio: 1/1; }
+
+        .gallery-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            cursor: pointer;
+            background: #e2e8f0;
+            display: block;
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-card:hover img {
+            transform: scale(1.07);
+        }
+
+        .gallery-card-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.82));
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            padding: 32px 16px 16px;
+        }
+
+        .gallery-card:hover .gallery-card-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-card-caption {
+            color: var(--white);
+            font-size: 0.9rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 6px;
+        }
+
+        .gallery-card-tag {
+            display: inline-block;
+            background: var(--ieee-gold);
+            color: var(--ieee-royal-blue);
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 3px 10px;
+            border-radius: 50px;
+        }
+
+        /* ── EMPTY / LOADING STATES ── */
+        .gallery-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 80px 24px;
+            color: var(--text-muted);
+        }
+
+        .gallery-state i {
+            font-size: 3rem;
+            color: var(--ieee-grey);
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .gallery-state p {
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 1024px) {
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .gallery-grid { grid-template-columns: 1fr; }
+            .gallery-filter-bar { padding: 16px 20px; }
+            .gallery-grid-wrap { padding: 24px 20px 0; }
+            .gallery-card:nth-child(n) { aspect-ratio: 4/3; }
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <main>
+        <!-- Hero Section — DO NOT TOUCH -->
+        <section class="page-hero section-spacing reveal">
+            <div class="text-container text-container-centered">
+                <span class="section-label">Visual Journey</span>
+                <h1 class="ieee-heading">Our <span>Gallery</span></h1>
+                <p class="ieee-description">Capturing moments of innovation, leadership, and community excellence at IEEE TEMS Bangalore.</p>
+            </div>
+        </section>
+
+        <!-- Gallery Filter + Grid Section -->
+        <section class="gallery-filter-section">
+
+            <!-- Filter Bar -->
+            <div class="gallery-filter-bar">
+                <div class="filter-buttons" id="filter-buttons">
+                    <!-- Dynamically populated -->
+                </div>
+                <div class="gallery-count">
+                    SHOWING <span id="gallery-count">0</span> PHOTOS
+                </div>
+            </div>
+
+            <!-- Photo Grid -->
+            <div class="gallery-grid-wrap">
+                <div class="gallery-grid" id="gallery-grid">
+                    <div class="gallery-state">
+                        <i class="fas fa-images"></i>
+                        <p>Loading gallery...</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <span class="close-lightbox" id="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img" src="" alt="">
+        <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="js/navbar.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/search.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const grid        = document.getElementById('gallery-grid');
+            const filterWrap  = document.getElementById('filter-buttons');
+            const countEl     = document.getElementById('gallery-count');
+            const lightbox    = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxCap = document.getElementById('lightbox-caption');
+
+            // ── Lightbox open/close ──
+            function openLightbox(src, caption) {
+                lightboxImg.src = src;
+                lightboxImg.alt = caption || '';
+                lightboxCap.textContent = caption || '';
+                lightbox.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeLightbox() {
+                lightbox.style.display = 'none';
+                lightboxImg.src = '';
+                document.body.style.overflow = '';
+            }
+
+            document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) closeLightbox();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeLightbox();
+            });
+
+            // ── Filter logic ──
+            function applyFilter(category) {
+                const cards = document.querySelectorAll('.gallery-card');
+                let visible = 0;
+                cards.forEach(card => {
+                    const match = category === 'all' || card.dataset.category === category;
+                    card.style.display = match ? 'block' : 'none';
+                    if (match) visible++;
+                });
+                countEl.textContent = visible;
+
+                // Update active button
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.filter === category);
+                });
+            }
+
+            // ── Build filter buttons from unique categories ──
+            function buildFilterButtons(categories) {
+                filterWrap.innerHTML = '';
+
+                // Always add "ALL PHOTOS" first
+                const allBtn = document.createElement('button');
+                allBtn.className = 'filter-btn active';
+                allBtn.dataset.filter = 'all';
+                allBtn.textContent = 'ALL PHOTOS';
+                allBtn.addEventListener('click', () => applyFilter('all'));
+                filterWrap.appendChild(allBtn);
+
+                // One button per unique category (sorted)
+                [...categories].sort().forEach(cat => {
+                    const btn = document.createElement('button');
+                    btn.className = 'filter-btn';
+                    btn.dataset.filter = cat.toLowerCase();
+                    btn.textContent = cat.toUpperCase();
+                    btn.addEventListener('click', () => applyFilter(cat.toLowerCase()));
+                    filterWrap.appendChild(btn);
+                });
+            }
+
+            // ── Render gallery cards ──
+            function renderGallery(items) {
+                if (!items || items.length === 0) {
+                    grid.innerHTML = `
+                        <div class="gallery-state">
+                            <i class="fas fa-images"></i>
+                            <p>No gallery items available yet.</p>
+                        </div>`;
+                    countEl.textContent = '0';
+                    buildFilterButtons([]);
+                    return;
+                }
+
+                // Collect unique categories (from 'category' field if it exists)
+                const categories = new Set();
+                items.forEach(item => {
+                    if (item.category) categories.add(item.category);
+                });
+
+                buildFilterButtons(categories);
+
+                grid.innerHTML = items.map(item => {
+                    const imgUrl   = resolveUrl(item.imageUrl);
+                    const caption  = item.caption || '';
+                    const category = item.category ? item.category.toLowerCase() : '';
+                    const tag      = item.category || '';
+
+                    return `
+                        <div class="gallery-card reveal"
+                             data-category="${category}"
+                             data-src="${imgUrl}"
+                             data-caption="${caption.replace(/"/g, '&quot;')}">
+                            <img src="${imgUrl}"
+                                 alt="${caption || 'Gallery Image'}"
+                                 loading="lazy"
+                                 onerror="this.parentElement.style.display='none'">
+                            <div class="gallery-card-overlay">
+                                ${caption ? `<div class="gallery-card-caption">${caption}</div>` : ''}
+                                ${tag ? `<span class="gallery-card-tag">${tag}</span>` : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                // Attach click handlers
+                document.querySelectorAll('.gallery-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        openLightbox(card.dataset.src, card.dataset.caption);
+                    });
+                });
+
+                // Trigger scroll reveal if available
+                if (typeof window.scrollReveal === 'function') window.scrollReveal();
+
+                // Show all by default
+                applyFilter('all');
+            }
+
+            // ── Load hero background image from pagecontents ──
+            async function loadGalleryHero() {
+                try {
+                    const heroRes = await API.getPageContent('gallery', 'hero');
+                    console.log('[Gallery Hero] API response:', heroRes);
+                    if (heroRes && heroRes.status === 'success' && heroRes.data) {
+                        const record = Array.isArray(heroRes.data)
+                            ? heroRes.data.find(d => d.page === 'gallery' && d.section === 'hero')
+                            : heroRes.data;
+                        if (record && record.image) {
+                            const imgUrl = resolveUrl(record.image);
+                            console.log('[Gallery Hero] applying background:', imgUrl);
+                            const heroEl = document.querySelector('.page-hero');
+                            if (heroEl) {
+                                heroEl.style.backgroundImage = `linear-gradient(rgba(11, 42, 74, 0.8), rgba(11, 42, 74, 0.7)), url('${imgUrl}')`;
+                                heroEl.style.backgroundSize = 'cover';
+                                heroEl.style.backgroundPosition = 'center';
+                            }
+                        }
+                    }
+                } catch (err) {
+                    console.error('[Gallery Hero] Failed to load hero image:', err.message);
+                }
+            }
+            loadGalleryHero();
+
+            // ── Fetch and initialise ──
+            const res = await API.getGallery();
+            console.log('[Gallery] API response:', res);
+
+            if (res && res.status === 'success') {
+                renderGallery(res.data);
+            } else {
+                grid.innerHTML = `
+                    <div class="gallery-state">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>Could not load gallery. Please try again later.</p>
+                    </div>`;
+                countEl.textContent = '0';
+                buildFilterButtons([]);
+            }
+        });
+    </script>
+</body>
+</html>

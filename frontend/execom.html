@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExeCom | IEEE TEMS Bangalore Section</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="css/cinematic-hero.css">
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="page-hero cine-hero" id="execom-hero" data-hero-page="execom">
+            <div class="cine-media">
+                <img class="cine-bg-img" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2000" alt="">
+                <video class="cine-bg-video" muted loop playsinline></video>
+            </div>
+            <div class="cine-overlay"></div>
+            <div class="hero-center-content">
+                <span class="cine-label" data-hero-label>Strategic Leadership</span>
+                <h1 class="ieee-heading" data-hero-title>Executive <span>Committee</span></h1>
+                <p class="ieee-description" data-hero-desc>Meet the dedicated team of professionals and visionaries driving the mission of IEEE TEMS Bangalore Section across generations.</p>
+            </div>
+            <div class="cine-scroll-indicator"><span>Scroll</span><div class="cine-scroll-line"></div></div>
+            <div class="cine-gold-line"></div>
+        </section>
+
+        <!-- Current Leadership Section -->
+        <section class="section-spacing">
+            <div class="container">
+                <div class="text-container text-container-centered mb-64">
+                    <span class="section-label" id="current-year-label">Active Board</span>
+                    <h2 class="ieee-heading">Current <span>Leadership</span></h2>
+                    <p class="ieee-description" id="active-desc">Our current board members bring together diverse expertise from top industries and academic institutions.</p>
+                </div>
+
+                <div class="leadership-grid" id="execom-grid">
+                    <!-- Loading Placeholder -->
+                    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">
+                        <i class="fas fa-circle-notch fa-spin" style="font-size: 2rem; margin-bottom: 20px;"></i>
+                        <p>Syncing leadership records...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Past ExeCom Section -->
+        <section class="section-spacing bg-light" id="past-execom-section">
+            <div class="container">
+                <!-- Section Header with Inline Dropdown -->
+                <div class="past-execom-header">
+                    <div>
+                        <span class="section-label">Our Legacy</span>
+                        <h2 class="ieee-heading" style="margin-bottom: 0;">Past <span>ExeCom</span></h2>
+                    </div>
+                    <div class="year-dropdown-wrap">
+                        <label for="year-select" class="year-dropdown-label"><i class="fas fa-filter"></i> Filter by Year</label>
+                        <select id="year-select" class="year-dropdown">
+                            <!-- Dynamic Options -->
+                        </select>
+                    </div>
+                </div>
+
+                <p class="ieee-description" id="legacy-desc" style="margin-top: 12px; margin-bottom: 48px;">Explore our historical leadership records and the visionaries who shaped the section over the years.</p>
+
+                <!-- Past ExeCom Cards -->
+                <div class="leadership-grid" id="past-execom-grid">
+                    <!-- Dynamic Cards -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="past-empty-state" style="display:none; text-align:center; padding: 60px 20px; color: var(--text-muted);">
+                    <i class="fas fa-users" style="font-size: 2.5rem; opacity: 0.2; margin-bottom: 16px; display:block;"></i>
+                    <p style="font-size: 1rem;">No records found for this year.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Detailed Profile Modal -->
+    <div class="modal-overlay" id="profile-modal">
+        <div class="modal-container">
+            <button class="modal-close" id="close-modal" aria-label="Close Profile">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-left">
+                <img id="modal-img" src="" alt="Profile Image">
+            </div>
+            <div class="modal-right">
+                <div class="modal-header">
+                    <h2 class="modal-name" id="modal-name">Member Name</h2>
+                    <span class="modal-designation" id="modal-role">Designation</span>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-bio" id="modal-bio"></p>
+                </div>
+                <div class="modal-actions">
+                    <a href="#" id="modal-linkedin" class="action-link" target="_blank"><i class="fab fa-linkedin"></i> <span>LinkedIn Profile</span></a>
+                    <a href="#" id="modal-email" class="action-link"><i class="fas fa-envelope"></i> <span id="modal-email-text"></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/navbar.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/cinematic-hero.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initCinematicHero('execom');
+            const UPLOADS_BASE = BACKEND_BASE + '/uploads/';
+            let allTeamMembers = [];
+            let allPastMembers = [];
+            let currentYear = new Date().getFullYear();
+            let activePastYear = null;
+
+            const defaultTeam = [];
+
+            async function initExeCom() {
+                // 1. Hero & Descs (Hybrid)
+                try {
+                    const res = await API.getPageContent('execom');
+                    if (res && res.status === 'success' && res.data.length > 0) {
+                        res.data.forEach(d => {
+                            if (d.section === 'hero') {
+                                if (d.title) document.querySelector('#execom-hero h1').innerHTML = d.title.replace('Committee', '<span>Committee</span>');
+                                if (d.content) document.querySelector('#execom-hero p').textContent = d.content;
+                                if (d.image) {
+                                    const imgUrl = d.image.startsWith('http') ? d.image : `${UPLOADS_BASE}${d.image}`;
+                                    document.getElementById('execom-hero').style.backgroundImage = `linear-gradient(rgba(11, 42, 74, 0.8), rgba(11, 42, 74, 0.7)), url('${imgUrl}')`;
+                                }
+                            }
+                            if (d.section === 'active-desc') document.getElementById('active-desc').textContent = d.content;
+                            if (d.section === 'legacy-desc') document.getElementById('legacy-desc').textContent = d.content;
+                        });
+                    }
+                } catch (e) {}
+
+                // 2. Current Team Members (from /api/team)
+                try {
+                    const res = await API.getTeam();
+                    allTeamMembers = (res && res.data && res.data.length > 0) ? res.data : defaultTeam;
+                    const years = [...new Set(allTeamMembers.map(m => m.year))].sort((a, b) => b - a);
+                    currentYear = years[0];
+                    document.getElementById('current-year-label').textContent = `ExeCom ${currentYear}`;
+                    renderCurrentTeam();
+                } catch (err) { console.error(err); }
+
+                // 3. Past ExeCom Members (from /api/past-execom)
+                try {
+                    const res = await API.getPastExeCom();
+                    allPastMembers = (res && res.data && res.data.length > 0) ? res.data : [];
+                    const pastYears = [...new Set(allPastMembers.map(m => m.year))].sort((a, b) => b - a);
+                    const select = document.getElementById('year-select');
+                    if (pastYears.length > 0) {
+                        select.innerHTML = pastYears.map(y => `<option value="${y}">${y}</option>`).join('');
+                        select.addEventListener('change', () => selectPastYear(parseInt(select.value)));
+                        selectPastYear(pastYears[0]);
+                        document.getElementById('past-execom-section').style.display = '';
+                    } else {
+                        document.getElementById('past-execom-section').style.display = 'none';
+                    }
+                } catch (err) { console.error(err); }
+
+                // 4. Handle Deep Linking (from Search)
+                const params = new URLSearchParams(window.location.search);
+                const memberId = params.get('id');
+                if (memberId) {
+                    setTimeout(() => window.openProfile(memberId, false), 500);
+                }
+            }
+
+            function renderCurrentTeam() {
+                const data = allTeamMembers.filter(m => m.year === currentYear).sort((a, b) => a.order - b.order);
+                document.getElementById('execom-grid').innerHTML = data.map(m => `
+                    <div class="leader-card reveal" onclick="openProfile('${m._id || ''}', ${!m._id})">
+                        ${m.photo ? `<div class="leader-img"><img src="${m.photo.startsWith('http') || m.photo.startsWith('assets') ? m.photo : UPLOADS_BASE + m.photo}" alt="${m.name}"></div>` : ''}
+                        <div class="leader-info"><h3>${m.name}</h3><p class="leader-role">${m.role}</p></div>
+                    </div>
+                `).join('');
+                if (window.scrollReveal) window.scrollReveal();
+            }
+
+            window.selectPastYear = function(year) {
+                activePastYear = year;
+                const select = document.getElementById('year-select');
+                if (select.value !== String(year)) select.value = year;
+
+                const data = allPastMembers.filter(m => m.year === year).sort((a, b) => a.order - b.order);
+                const grid = document.getElementById('past-execom-grid');
+                const empty = document.getElementById('past-empty-state');
+
+                if (data.length === 0) {
+                    grid.innerHTML = '';
+                    empty.style.display = 'block';
+                    return;
+                }
+                empty.style.display = 'none';
+                grid.innerHTML = data.map(m => `
+                    <div class="leader-card reveal" onclick="openPastProfile('${m._id}')" style="cursor:pointer;">
+                        ${m.photo
+                            ? `<div class="leader-img"><img src="${m.photo.startsWith('http') ? m.photo : UPLOADS_BASE + m.photo}" alt="${m.name}" loading="lazy"></div>`
+                            : '<div class="leader-img leader-img-placeholder"><i class="fas fa-user"></i></div>'}
+                        <div class="leader-info">
+                            <h3>${m.name}</h3>
+                            <p class="leader-role">${m.role}</p>
+                            ${m.linkedin ? `<a href="${m.linkedin}" target="_blank" style="font-size:0.8rem;color:var(--ieee-blue);"><i class="fab fa-linkedin"></i> LinkedIn</a>` : ''}
+                        </div>
+                    </div>
+                `).join('');
+                if (window.scrollReveal) window.scrollReveal();
+            };
+
+            window.openPastProfile = function(id) {
+                const member = allPastMembers.find(m => m._id === id);
+                if (!member) return;
+                document.getElementById('modal-name').textContent = member.name;
+                document.getElementById('modal-role').textContent = member.role;
+                document.getElementById('modal-bio').textContent = member.bio || '';
+                const img = document.getElementById('modal-img');
+                if (member.photo) {
+                    img.src = member.photo.startsWith('http') ? member.photo : UPLOADS_BASE + member.photo;
+                    document.querySelector('.modal-left').style.display = 'block';
+                } else {
+                    document.querySelector('.modal-left').style.display = 'none';
+                }
+                document.getElementById('modal-linkedin').style.display = member.linkedin ? 'flex' : 'none';
+                document.getElementById('modal-linkedin').href = member.linkedin || '#';
+                document.getElementById('modal-email').style.display = 'none';
+                document.getElementById('modal-email-text').textContent = '';
+                document.getElementById('profile-modal').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            };
+
+            window.openProfile = function(id, isDefault) {
+                const member = isDefault ? allTeamMembers.find(m => m.name === id) : allTeamMembers.find(m => m._id === id);
+                if (!member) return;
+                document.getElementById('modal-name').textContent = member.name;
+                document.getElementById('modal-role').textContent = member.role;
+                document.getElementById('modal-bio').textContent = member.bio || "";
+                const img = document.getElementById('modal-img');
+                if (member.photo) {
+                    img.src = member.photo.startsWith('http') || member.photo.startsWith('assets') ? member.photo : UPLOADS_BASE + member.photo;
+                    document.querySelector('.modal-left').style.display = 'block';
+                } else {
+                    document.querySelector('.modal-left').style.display = 'none';
+                }
+                document.getElementById('modal-linkedin').style.display = member.linkedin ? 'flex' : 'none';
+                document.getElementById('modal-linkedin').href = member.linkedin || '#';
+                document.getElementById('modal-email').style.display = member.email ? 'flex' : 'none';
+                document.getElementById('modal-email').href = `mailto:${member.email}`;
+                document.getElementById('modal-email-text').textContent = member.email || '';
+                document.getElementById('profile-modal').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            };
+
+            document.getElementById('close-modal').onclick = () => {
+                document.getElementById('profile-modal').classList.remove('active');
+                document.body.style.overflow = '';
+            };
+
+            initExeCom();
+        });
+    </script>
+</body>
+</html>

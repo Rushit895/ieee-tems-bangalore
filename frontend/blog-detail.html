@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Detail | IEEE TEMS Bangalore</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <main>
+        <!-- Article Header -->
+        <section class="blog-detail-hero" id="blog-header">
+            <div class="container">
+                <div class="text-container">
+                    <a href="blogs.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to All News</a>
+                    <span id="blog-detail-cat" class="section-label mt-20">CATEGORY</span>
+                    <h1 id="blog-detail-title" class="ieee-heading" style="font-size: 2.5rem; margin-top: 10px;">Loading story...</h1>
+                    <div class="blog-meta-detail">
+                        <div class="meta-item"><i class="far fa-user"></i> <span id="blog-detail-author">...</span></div>
+                        <div class="meta-item"><i class="far fa-calendar"></i> <span id="blog-detail-date">...</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Image -->
+        <section class="section-spacing py-0">
+            <div class="container">
+                <div class="blog-featured-img-wrap reveal">
+                    <img id="blog-detail-img" src="" alt="Featured Image">
+                </div>
+            </div>
+        </section>
+
+        <!-- Article Content -->
+        <section class="section-spacing">
+            <div class="container">
+                <div class="text-container">
+                    <div id="blog-detail-content" class="blog-rich-text ieee-description">
+                        <!-- Content injected here -->
+                        <div style="padding: 40px 0; text-align: center;">
+                            <i class="fas fa-circle-notch fa-spin"></i>
+                        </div>
+                    </div>
+
+                    <!-- Share Section -->
+                    <div class="blog-share-box">
+                        <h4>Share this insight:</h4>
+                        <div class="share-btns">
+                            <a href="#" id="share-linkedin" target="_blank"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" id="share-twitter" target="_blank"><i class="fab fa-twitter"></i></a>
+                            <a href="#" id="share-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/navbar.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const blogId = params.get('id');
+            const UPLOADS_BASE = BACKEND_BASE + '/uploads/';
+
+            if (!blogId) {
+                window.location.href = 'blogs.html';
+                return;
+            }
+
+            try {
+                // Fetch specific blog using the direct ID endpoint
+                const res = await API.apiFetch(`/blogs/${blogId}`);
+                if (res && res.status === 'success') {
+                    const blog = res.data;
+                    
+                    // Populate UI
+                    document.title = `${blog.title} | IEEE TEMS Bangalore`;
+                    document.getElementById('blog-detail-title').textContent = blog.title;
+                    document.getElementById('blog-detail-cat').textContent = blog.category || 'NEWS';
+                    document.getElementById('blog-detail-author').textContent = blog.author || 'IEEE TEMS';
+                    document.getElementById('blog-detail-date').textContent = new Date(blog.date || blog.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+                    
+                    const imgUrl = blog.image ? (blog.image.startsWith('http') ? blog.image : `${UPLOADS_BASE}${blog.image}`) : null;
+                    const imgContainer = document.getElementById('blog-detail-img').parentElement;
+                    if (imgUrl) {
+                        document.getElementById('blog-detail-img').src = imgUrl;
+                    } else {
+                        imgContainer.style.display = 'none';
+                    }
+
+                    // Simple markdown-ish conversion for content (handle newlines as paragraphs)
+                    const contentHtml = blog.content.split('\n').filter(p => p.trim() !== '').map(p => `<p>${p}</p>`).join('');
+                    document.getElementById('blog-detail-content').innerHTML = contentHtml;
+
+                    // Setup Share Links
+                    const url = encodeURIComponent(window.location.href);
+                    const title = encodeURIComponent(blog.title);
+                    document.getElementById('share-linkedin').href = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+                    document.getElementById('share-twitter').href = `https://twitter.com/intent/tweet?text=${title}&url=${url}`;
+                    document.getElementById('share-whatsapp').href = `https://api.whatsapp.com/send?text=${title}%20${url}`;
+
+                }
+            } catch (e) {
+                console.error(e);
+                document.getElementById('blog-detail-content').innerHTML = '<p style="color: red;">Failed to load story content.</p>';
+            }
+        });
+    </script>
+
+    <style>
+        .blog-detail-hero { padding: 60px 0 40px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
+        .back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--ieee-blue); text-decoration: none; font-weight: 700; font-size: 0.85rem; margin-bottom: 20px; transition: 0.2s; }
+        .back-link:hover { gap: 12px; color: var(--ieee-royal-blue); }
+        .blog-meta-detail { display: flex; gap: 24px; margin-top: 20px; }
+        .meta-item { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+        .meta-item i { color: var(--ieee-blue); }
+
+        .blog-featured-img-wrap { width: 100%; height: 500px; margin-top: -40px; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 60px -12px rgba(0,0,0,0.15); border: 4px solid white; position: relative; z-index: 5; }
+        .blog-featured-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+        .blog-rich-text { font-size: 1.1rem; line-height: 1.8; color: #334155; }
+        .blog-rich-text p { margin-bottom: 24px; }
+        
+        .blog-share-box { margin-top: 60px; padding: 30px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+        .blog-share-box h4 { margin: 0; font-size: 1rem; color: var(--ieee-navy); }
+        .share-btns { display: flex; gap: 15px; }
+        .share-btns a { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: white; color: var(--ieee-navy); border: 1px solid #e2e8f0; transition: 0.2s; font-size: 1.1rem; }
+        .share-btns a:hover { transform: translateY(-3px); color: white; border-color: transparent; }
+        .share-btns a:nth-child(1):hover { background: #0077b5; }
+        .share-btns a:nth-child(2):hover { background: #1da1f2; }
+        .share-btns a:nth-child(3):hover { background: #25d366; }
+
+        @media (max-width: 768px) {
+            .blog-featured-img-wrap { height: 300px; margin-top: -20px; }
+            .blog-share-box { flex-direction: column; gap: 20px; text-align: center; }
+            .blog-detail-hero { padding: 40px 0; }
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,278 @@
+/* ============================================================
+   IEEE TEMS BANGALORE — FOOTER
+   Strict IEEE palette:
+     Background    : #002855 (Dark Blue)
+     Accent        : #C69214 (IEEE Gold)
+     Text muted    : rgba(255,255,255,0.55)
+     Bottom strip  : #001a38
+   ============================================================ */
+
+.main-footer {
+    background: #002855;
+    color: rgba(255, 255, 255, 0.60);
+    font-family: var(--font-main);
+    border-top: 5px solid #C69214;
+}
+
+.footer-content {
+    padding-top: 72px;
+    padding-bottom: 56px;
+    max-width: 1320px !important;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 48px;
+}
+
+/* Column headings */
+.footer-column h4.footer-title {
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    position: relative;
+    padding-bottom: 12px;
+}
+
+.footer-column h4.footer-title::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 28px;
+    height: 2px;
+    background: #C69214;
+}
+
+/* Brand column */
+.footer-logo img {
+    display: block;
+    height: 48px;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+}
+
+.brand-desc {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin: 20px 0 24px;
+    color: rgba(255, 255, 255, 0.50);
+}
+
+/* Social icons */
+.social-links {
+    display: flex;
+    gap: 10px;
+}
+
+.social-links a {
+    width: 34px;
+    height: 34px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 1rem;
+    transition: all 0.25s ease;
+    text-decoration: none;
+}
+
+.social-links a:hover {
+    background: #00629B;
+    border-color: #00629B;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+/* Footer nav links */
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li { margin-bottom: 10px; }
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.footer-links a::before {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 1px;
+    background: #C69214;
+    transition: width 0.2s ease;
+    flex-shrink: 0;
+}
+
+.footer-links a:hover {
+    color: #ffffff;
+    padding-left: 4px;
+}
+
+.footer-links a:hover::before { width: 10px; }
+
+/* Contact info list */
+.contact-info {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.contact-info li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.contact-info i {
+    color: #C69214;
+    margin-top: 3px;
+    flex-shrink: 0;
+    font-size: 0.95rem;
+}
+
+.contact-info a {
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.contact-info a:hover { color: #ffffff; }
+
+/* ============================================================
+   FOOTER BOTTOM STRIP
+   ============================================================ */
+.footer-bottom {
+    background: #001a38;
+    padding: 20px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.footer-bottom .container {
+    max-width: 1320px !important;
+}
+
+.copyright {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.35);
+    margin: 0;
+}
+
+.footer-legal {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+.footer-legal a {
+    color: rgba(255, 255, 255, 0.35);
+    text-decoration: none;
+    font-size: 0.82rem;
+    transition: color 0.2s ease;
+}
+
+.footer-legal a:hover { color: rgba(255, 255, 255, 0.80); }
+
+/* Dev Team Credit */
+.footer-devteam {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    margin-top: 14px;
+    padding-top: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 0.78rem;
+}
+
+.devteam-label {
+    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 0.03em;
+}
+
+.devteam-members {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+}
+
+.devteam-dot {
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 1rem;
+}
+
+.devteam-member {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.55);
+    transition: color 0.2s;
+    white-space: nowrap;
+}
+
+.devteam-member:hover {
+    color: #c9a227;
+}
+
+.devteam-name {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.70);
+}
+
+.devteam-member:hover .devteam-name {
+    color: #c9a227;
+}
+
+.devteam-role {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.30);
+}
+
+@media (max-width: 768px) {
+    .footer-devteam { flex-direction: column; gap: 8px; text-align: center; }
+    .devteam-dot { display: none; }
+    .devteam-members { flex-direction: column; gap: 8px; }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px) {
+    .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+}
+
+@media (max-width: 768px) {
+    .footer-content { padding-top: 56px; padding-bottom: 40px; }
+    .responsive-column { flex-direction: column; gap: 12px; text-align: center; }
+    .footer-legal { justify-content: center; flex-wrap: wrap; gap: 16px; }
+    .copyright { text-align: center; }
+}
+
+@media (max-width: 480px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+}

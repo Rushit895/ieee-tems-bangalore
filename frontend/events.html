@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Events | IEEE TEMS Bangalore Section</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/global.css?v=999">
+    <link rel="stylesheet" href="css/navbar.css?v=999">
+    <link rel="stylesheet" href="css/footer.css?v=999">
+    <link rel="stylesheet" href="css/pages.css?v=1000">
+    <link rel="stylesheet" href="css/events.css?v=2001">
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="page-hero" id="events-hero-redesigned">
+            <video autoplay muted loop playsinline class="hero-video-bg">
+                <source src="assets/event.mp4" type="video/mp4">
+            </video>
+            <div class="hero-overlay-asymmetric"></div>
+            <div class="hero-center-content">
+                <span class="eyebrow">IEEE TEMS EVENTS</span>
+                <h1 id="events-hero-h1">Driving Innovation Through Events</h1>
+                <p>Connect with industry leaders, participate in hands-on workshops, and stay ahead in the world of technology management.</p>
+                <a href="#events-list" class="cta-button">Explore Events</a>
+            </div>
+            <div class="ev-scroll-indicator">
+                <span>Scroll</span>
+                <div class="ev-scroll-line"></div>
+            </div>
+        </section>
+
+        <script>
+            // Word-by-word reveal for events hero
+            (function() {
+                const h1 = document.getElementById('events-hero-h1');
+                if (!h1) return;
+                const words = h1.textContent.trim().split(/\s+/);
+                h1.innerHTML = words.map((w, i) =>
+                    `<span class="ev-word" style="animation-delay:${0.6 + i * 0.1}s">${w}</span>`
+                ).join(' ');
+            })();
+        </script>
+
+        <!-- Main Events Section -->
+        <section id="events-list" class="section-spacing bg-light">
+            <div class="container">
+                <div class="text-container text-container-centered mb-64">
+                    <span class="section-label">Engage & Learn</span>
+                    <h2 class="ieee-heading">Browse <span>All Events</span></h2>
+                    <p class="ieee-description" id="list-desc">Filter by category or search to find the most relevant professional development opportunities.</p>
+                </div>
+
+                <!-- Filters -->
+                <div class="events-toolbar">
+                    <div class="event-tabs">
+                        <button class="tab-btn active" data-tab="upcoming">Upcoming</button>
+                        <button class="tab-btn" data-tab="past">Past Events</button>
+                    </div>
+                    <div class="search-wrap-event">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="event-search" placeholder="Search events...">
+                    </div>
+                </div>
+
+                <div class="category-filter">
+                    <button class="filter-chip active" data-category="All">All Categories</button>
+                    <button class="filter-chip" data-category="Workshops">Workshops</button>
+                    <button class="filter-chip" data-category="Conferences">Conferences</button>
+                    <button class="filter-chip" data-category="Talks">Expert Talks</button>
+                </div>
+
+                <div class="events-grid" id="events-container">
+                    <!-- Loaded Dynamically -->
+                </div>
+
+                <div class="pagination" id="pagination"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Event Modal -->
+    <div class="modal-overlay-event" id="event-modal">
+        <div class="modal-content-event">
+            <button class="close-btn" id="close-event-modal"><i class="fas fa-times"></i></button>
+            <div class="modal-grid-event">
+                <div class="modal-img-area"><img id="modal-event-img" src="" alt="Event Banner"></div>
+                <div class="modal-info-area">
+                    <span id="modal-event-cat" class="modal-cat-tag"></span>
+                    <h2 id="modal-event-title"></h2>
+                    <div class="modal-meta-grid">
+                        <div class="meta-item"><i class="far fa-calendar-alt"></i><span id="modal-event-date"></span></div>
+                        <div class="meta-item"><i class="fas fa-map-marker-alt"></i><span id="modal-event-loc"></span></div>
+                        <div class="meta-item"><i class="fas fa-users"></i><span id="modal-event-org"></span></div>
+                    </div>
+                    <div class="modal-desc-box"><p id="modal-event-desc"></p></div>
+                    <div class="modal-footer-event">
+                        <a href="#" id="modal-event-reg" class="btn btn-primary" target="_blank">Register Now</a>
+                        <a href="#" id="modal-event-more" class="btn btn-outline" target="_blank">More Info</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/navbar.js?v=999"></script>
+    <script src="js/main.js?v=999"></script>
+    <script src="js/api.js?v=999"></script>
+    <script src="js/search.js"></script>
+    <script src="js/events.js?v=1000"></script>
+</body>
+</html>

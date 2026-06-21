@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest News & Blog | IEEE TEMS Bangalore</title>
+    <link rel="stylesheet" href="css/global.css?v=2">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="css/cinematic-hero.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @media (max-width: 992px) { .blog-card { grid-column: span 6 !important; } }
+        @media (max-width: 600px) { .blog-card { grid-column: span 12 !important; } }
+    </style>
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="page-hero cine-hero" id="blogs-hero" data-hero-page="blogs">
+            <div class="cine-media">
+                <img class="cine-bg-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=2000" alt="">
+                <video class="cine-bg-video" muted loop playsinline></video>
+            </div>
+            <div class="cine-overlay"></div>
+            <div class="hero-center-content">
+                <span id="hero-label" class="cine-label" data-hero-label>Section Updates</span>
+                <h1 id="hero-title" class="ieee-heading" data-hero-title>Latest <span>News & Insights</span></h1>
+                <p id="hero-desc" class="ieee-description" data-hero-desc>Deep dives into technology management, section announcements, and expert perspectives from our community.</p>
+            </div>
+            <div class="cine-scroll-indicator"><span>Scroll</span><div class="cine-scroll-line"></div></div>
+            <div class="cine-gold-line"></div>
+        </section>
+
+        <!-- Blog Feed Section -->
+        <section class="section-spacing bg-light">
+            <div class="container">
+                <div class="grid-12" id="blogs-container">
+                    <!-- Loaded Dynamically -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/navbar.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/cinematic-hero.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            initCinematicHero('blogs');
+            const container = document.getElementById('blogs-container');
+            const UPLOADS_BASE = BACKEND_BASE + '/uploads/';
+
+            const defaultBlogs = [];
+
+            const init = async () => {
+                // 2. Blogs (Hybrid)
+                try {
+                    const res = await API.getBlogs();
+                    const data = (res && res.status === 'success' && res.data.length > 0) ? res.data : [];
+                    renderBlogs(data);
+                } catch (e) { renderBlogs([]); }
+            };
+
+            const renderBlogs = (items) => {
+                if (items.length === 0) { container.innerHTML = ''; return; }
+                container.innerHTML = items.map(blog => {
+                    const imgUrl = blog.image ? (blog.image.startsWith('http') || blog.image.startsWith('assets') ? blog.image : `${UPLOADS_BASE}${blog.image}`) : null;
+                    const date = new Date(blog.date || Date.now()).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+                    
+                    const bgStyle = imgUrl ? `background-image:url('${imgUrl}')` : 'background:linear-gradient(135deg,#0b2a4a,#10416b)';
+                    const href = blog.articleUrl || '#';
+                    const target = blog.articleUrl ? 'target="_blank" rel="noopener noreferrer"' : '';
+                    return `
+                        <a class="blog-card reveal" href="${href}" ${target} style="grid-column: span 4;">
+                            <div class="blog-card-bg" style="${bgStyle}"></div>
+                            <div class="blog-shade"></div>
+                            <span class="blog-category-tag">${blog.category || 'Update'}</span>
+                            <div class="blog-glass">
+                                <span class="blog-date"><i class="far fa-calendar-alt"></i> ${date}</span>
+                                <h3>${blog.title}</h3>
+                                ${blog.articleUrl ? `<span class="blog-read-more">Read More &rarr;</span>` : ''}
+                            </div>
+                        </a>
+                    `;
+                }).join('');
+                if (window.scrollReveal) window.scrollReveal();
+            };
+
+            init();
+        });
+    </script>
+</body>
+</html>

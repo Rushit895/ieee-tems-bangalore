@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.env
+
+# Logs
+*.log
+backend/server_output.txt
+
+# Local DB backups (not needed in repo)
+backend/backup/
+
+# Local editor/agent settings
+.claude/settings.local.json
+
+# OS files
+.DS_Store
+Thumbs.db

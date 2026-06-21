@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results | IEEE TEMS Bangalore</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <main>
+        <section class="page-hero section-spacing reveal">
+            <div class="text-container text-container-centered">
+                <span class="section-label">Search results</span>
+                <h1 class="ieee-heading">Results for: <span id="search-query-display" style="color: var(--ieee-blue);">...</span></h1>
+                <p class="ieee-description" id="results-summary">Searching through our section database...</p>
+            </div>
+        </section>
+
+        <section class="section-spacing bg-light">
+            <div class="container">
+                <div id="search-results-container" class="grid-12">
+                    <div style="grid-column: 1/-1; text-align: center; padding: 100px 24px;">
+                        <i class="fas fa-circle-notch fa-spin" style="font-size: 3rem; color: var(--ieee-blue); margin-bottom: 20px;"></i>
+                        <p>Locating matches...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/navbar.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const query = params.get('q');
+            const container = document.getElementById('search-results-container');
+            const display = document.getElementById('search-query-display');
+            const summary = document.getElementById('results-summary');
+
+            if (!query) {
+                container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px;"><p>Please enter a search term.</p></div>';
+                return;
+            }
+
+            display.textContent = `"${query}"`;
+            const UPLOADS_BASE = BACKEND_BASE + '/uploads/';
+
+            try {
+                const res = await API.apiFetch(`/search?q=${encodeURIComponent(query)}`);
+                if (res && res.status === 'success') {
+                    const { events, branches, team, blogs } = res.data;
+                    const total = events.length + branches.length + team.length + (blogs?.length || 0);
+                    
+                    if (total === 0) {
+                        summary.textContent = "No matches found. Try different keywords.";
+                        container.innerHTML = `
+                            <div style="grid-column: 1/-1; text-align: center; padding: 60px;">
+                                <i class="fas fa-search-minus" style="font-size: 4rem; opacity: 0.1; margin-bottom: 20px;"></i>
+                                <h3>We couldn't find anything</h3>
+                                <p>Double check your spelling or try searching for broad terms like "workshop".</p>
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    summary.textContent = `Found ${total} match${total === 1 ? '' : 'es'} across our section modules.`;
+                    
+                    let html = '';
+                    
+                    // Render Blogs
+                    if (blogs) {
+                        blogs.forEach(b => {
+                            const imgUrl = b.image ? (b.image.startsWith('http') ? b.image : `${UPLOADS_BASE}${b.image}`) : null;
+                            html += `
+                                <div class="search-result-card" style="grid-column: span 4;">
+                                    ${imgUrl ? `<div class="search-card-thumb"><img src="${imgUrl}" alt=""></div>` : ''}
+                                    <span class="type-tag" style="background: #fae8ff; color: #86198f;">BLOG POST</span>
+                                    <h3>${b.title}</h3>
+                                    <p>Latest update from our editorial team.</p>
+                                    <a href="blog-detail.html?id=${b.id}" class="learn-more">Read Story →</a>
+                                </div>
+                            `;
+                        });
+                    }
+
+                    // Render Team
+                    team.forEach(m => {
+                        const imgUrl = m.photo ? (m.photo.startsWith('http') ? m.photo : `${UPLOADS_BASE}${m.photo}`) : null;
+                        html += `
+                            <div class="search-result-card" style="grid-column: span 4;">
+                                ${imgUrl ? `<div class="search-card-thumb"><img src="${imgUrl}" alt=""></div>` : ''}
+                                <span class="type-tag" style="background: #e0e7ff; color: #4338ca;">TEAM MEMBER</span>
+                                <h3>${m.title}</h3>
+                                <p>${m.role || 'Board Member'}</p>
+                                <a href="execom.html?id=${m.id}" class="learn-more">View Profile →</a>
+                            </div>
+                        `;
+                    });
+
+                    // Render Events
+                    events.forEach(e => {
+                        const imgUrl = e.image ? (e.image.startsWith('http') ? e.image : `${UPLOADS_BASE}${e.image}`) : null;
+                        html += `
+                            <div class="search-result-card" style="grid-column: span 4;">
+                                ${imgUrl ? `<div class="search-card-thumb"><img src="${imgUrl}" alt=""></div>` : ''}
+                                <span class="type-tag" style="background: #fef3c7; color: #b45309;">EVENT</span>
+                                <h3>${e.title}</h3>
+                                <p>${e.date ? new Date(e.date).toLocaleDateString() : 'Upcoming Activity'}</p>
+                                <a href="events.html?id=${e.id}" class="learn-more">Event Details →</a>
+                            </div>
+                        `;
+                    });
+
+                    // Render Branches
+                    branches.forEach(b => {
+                        const imgUrl = b.institutionImage ? (b.institutionImage.startsWith('http') ? b.institutionImage : `${UPLOADS_BASE}${b.institutionImage}`) : null;
+                        html += `
+                            <div class="search-result-card" style="grid-column: span 4;">
+                                ${imgUrl ? `<div class="search-card-thumb"><img src="${imgUrl}" alt=""></div>` : ''}
+                                <span class="type-tag" style="background: #d1fae5; color: #065f46;">STUDENT BRANCH</span>
+                                <h3>${b.title}</h3>
+                                <p>${b.city || 'Karnataka'}</p>
+                                <a href="branches.html?id=${b.id}" class="learn-more">View Branch →</a>
+                            </div>
+                        `;
+                    });
+
+                    container.innerHTML = html;
+                }
+            } catch (e) {
+                container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px; color: red;"><p>Search service is temporarily unavailable.</p></div>';
+            }
+        });
+    </script>
+    <style>
+        .search-result-card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid var(--ieee-grey);
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .search-result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-color: var(--ieee-blue);
+        }
+        .type-tag {
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 4px;
+            align-self: flex-start;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+        .search-card-thumb {
+            width: 100%;
+            height: 140px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            border: 1px solid var(--ieee-grey);
+        }
+        .search-card-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .search-result-card h3 {
+            font-size: 1.1rem;
+            color: var(--ieee-navy);
+            margin: 0 0 8px;
+        }
+        .search-result-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin: 0;
+            flex-grow: 1;
+        }
+    </style>
+</body>
+</html>
