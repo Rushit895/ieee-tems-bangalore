@@ -20,6 +20,7 @@ connectDB();
 const PRODUCTION_ORIGINS = [
   'https://chapters.bangalore.ieee-tems.org',
   'https://ieee-tems-bangalore.netlify.app',
+  'https://admintemsblr.netlify.app',
 ];
 const DEV_ORIGINS = ['http://localhost:8080', 'http://localhost:3000', 'http://localhost:5173'];
 const allowedOrigins = process.env.NODE_ENV === 'production'
