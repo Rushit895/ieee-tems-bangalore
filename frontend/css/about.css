@@ -432,6 +432,14 @@
     text-shadow: 0 0 50px rgba(201,168,76,0.2);
 }
 
+/* Touch devices can't hover — show words filled gold (not faint outlines) */
+@media (hover: none) {
+    .pillar-word {
+        color: #c9a84c;
+        -webkit-text-stroke: 0px transparent;
+    }
+}
+
 /* ── Content ── */
 .pillar-content {
     opacity: 0;

@@ -541,6 +541,10 @@
 
 .video-glass-box h2 {
     color: var(--ieee-gold) !important;
+    font-size: clamp(1.85rem, 5.5vw, 2.75rem);
+    line-height: 1.18;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .video-glass-box h2 span {
@@ -778,6 +782,13 @@
     .stat-grid, .gallery-grid-clean { grid-template-columns: 1fr; }
     .event-card-sharp { width: 300px; min-width: 300px; max-width: 90vw; height: 420px; }
     .hero-btns { flex-direction: column; }
+
+    /* Karnataka presence glass box — fit within the viewport */
+    .video-glass-box {
+        max-width: 100%;
+        padding: var(--space-5);
+    }
+    .video-presence .container { padding-left: 16px; padding-right: 16px; }
 }
 
 /* --- GIF BLOCK SECTION --- */

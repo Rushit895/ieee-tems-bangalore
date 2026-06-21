@@ -278,7 +278,9 @@
             const defaultFocus = [];
 
             const renderFocus = (data) => {
-                document.getElementById('focus-areas-container').innerHTML = data.map(f => `
+                const c = document.getElementById('focus-areas-container');
+                if (!c) return;
+                c.innerHTML = data.map(f => `
                     <div class="focus-card reveal">
                         <div class="icon-box"><i class="${f.icon || 'fas fa-bullseye'}"></i></div>
                         <h3>${f.title}</h3>
@@ -289,15 +291,18 @@
 
             try {
                 const res = await API.getHome('focus-areas');
+                const c = document.getElementById('focus-areas-container');
                 if (res && res.data && res.data.length > 0) renderFocus(res.data);
-                else document.getElementById('focus-areas-container').innerHTML = '';
-            } catch (e) { document.getElementById('focus-areas-container').innerHTML = ''; }
+                else if (c) c.innerHTML = '';
+            } catch (e) { const c = document.getElementById('focus-areas-container'); if (c) c.innerHTML = ''; }
 
             // --- 4. ACTIVITIES (HYBRID) ---
             const defaultActivities = [];
 
             const renderActivities = (data) => {
-                document.getElementById('activities-container').innerHTML = data.map(act => `
+                const c = document.getElementById('activities-container');
+                if (!c) return;
+                c.innerHTML = data.map(act => `
                     <div class="activity-card reveal">
                         <div class="activity-icon"><i class="${act.icon || 'fas fa-check'}"></i></div>
                         <div class="activity-info"><h4>${act.title}</h4><p>${act.description}</p></div>
@@ -307,9 +312,10 @@
 
             try {
                 const res = await API.getHome('activities');
+                const c = document.getElementById('activities-container');
                 if (res && res.data && res.data.length > 0) renderActivities(res.data);
-                else document.getElementById('activities-container').innerHTML = '';
-            } catch (e) { document.getElementById('activities-container').innerHTML = ''; }
+                else if (c) c.innerHTML = '';
+            } catch (e) { const c = document.getElementById('activities-container'); if (c) c.innerHTML = ''; }
 
             // --- 5. CHAIR MESSAGE (HYBRID) ---
             try {
@@ -329,11 +335,6 @@
                     if (chair.image) {
                         const imgUrl = chair.image.startsWith('http') ? chair.image : `${UPLOADS_BASE}${chair.image}`;
                         document.getElementById('chair-msg-img').src = imgUrl;
-                        document.getElementById('chair-img-container').style.display = 'block';
-                        document.getElementById('chair-layout-grid').style.gridTemplateColumns = '4fr 8fr';
-                    } else {
-                        document.getElementById('chair-img-container').style.display = 'none';
-                        document.getElementById('chair-layout-grid').style.gridTemplateColumns = '1fr';
                     }
                 }
             } catch (e) { console.warn("Using default Chair Message."); }
@@ -342,7 +343,9 @@
             const defaultReports = [];
 
             const renderReports = (data) => {
-                document.getElementById('agm-reports-container').innerHTML = data.map(report => `
+                const c = document.getElementById('agm-reports-container');
+                if (!c) return;
+                c.innerHTML = data.map(report => `
                     <div class="report-card reveal">
                         <div class="report-icon"><i class="fas ${report.fileType === 'PDF' ? 'fa-file-pdf' : 'fa-file-alt'}"></i></div>
                         <div class="report-info">
@@ -359,9 +362,10 @@
                 const res = await API.getResources();
                 const allRes = (res && res.status === 'success') ? res.data : [];
                 const dbReports = allRes.filter(r => r.category === 'AGM REPORT');
+                const c = document.getElementById('agm-reports-container');
                 if (dbReports.length > 0) renderReports(dbReports);
-                else document.getElementById('agm-reports-container').innerHTML = '';
-            } catch (e) { document.getElementById('agm-reports-container').innerHTML = ''; }
+                else if (c) c.innerHTML = '';
+            } catch (e) { const c = document.getElementById('agm-reports-container'); if (c) c.innerHTML = ''; }
             
             if (window.scrollReveal) window.scrollReveal();
         });
