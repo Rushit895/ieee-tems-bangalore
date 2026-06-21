@@ -481,6 +481,25 @@
     .map-container .text-center {
         padding: 2.5rem 1.5rem;
     }
+
+    /* ── Branch detail modal on mobile ── */
+    .modal-hero { height: 200px; }
+    .modal-body-padding { padding: var(--space-5); }
+
+    /* Stack the name above the social buttons (was overflowing in a row) */
+    .modal-body-padding .flex-between {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 16px;
+    }
+    #modal-branch-name {
+        font-size: 1.5rem !important;
+        line-height: 1.25;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+    .branch-social { flex-wrap: wrap; }
+    #modal-branch-desc-container { margin-top: 20px !important; }
 }
 
 @keyframes fadeIn {
