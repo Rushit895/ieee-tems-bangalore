@@ -866,7 +866,7 @@
     background:
         radial-gradient(circle at 78% 12%, rgba(20,71,98,0.55), transparent 55%),
         linear-gradient(180deg, #06111f 0%, #0a1d33 100%) !important;
-    padding: 5rem 0;
+    padding: 2.5rem 0 4.5rem;
 }
 
 #chair .section-label  { color: #c9a84c !important; }

@@ -140,11 +140,6 @@
             <!-- Background particles -->
             <div class="chair-particles"></div>
 
-            <!-- Top label -->
-            <div class="chair-eyebrow-wrap">
-                <span class="chair-eyebrow">Leadership Perspective</span>
-            </div>
-
             <!-- Main split layout -->
             <div class="chair-split">
 
@@ -169,14 +164,7 @@
                         Our mission is to bridge the gap between technical expertise and strategic leadership, empowering professionals to drive meaningful innovation.
                     </blockquote>
                     <div class="chair-divider"></div>
-                    <p class="chair-body" id="chair-msg-full">
-                        Welcome to the IEEE TEMS Bangalore Section. We are committed to building a community where engineering and management meet. Our focus is to empower our members with leadership excellence, strategic thinking, and the skills needed to lead in an ever-evolving technological landscape. Join us as we bridge the gap between technical brilliance and professional management.
-                    </p>
-                    <div class="chair-signature">
-                        <div class="chair-sig-line"></div>
-                        <strong id="chair-msg-sig">Dr. Rajesh Kumar</strong>
-                        <span>Chair, IEEE TEMS Bangalore Section</span>
-                    </div>
+                    <div class="chair-body" id="chair-msg-full"></div>
                 </div>
 
             </div>
@@ -324,13 +312,21 @@
                     const chair = res.data[0];
                     if (chair.name) {
                         document.getElementById('chair-msg-name').textContent = chair.name;
-                        document.getElementById('chair-msg-sig').textContent = chair.name;
                     }
                     if (chair.designation) document.getElementById('chair-msg-designation').textContent = chair.designation;
                     if (chair.message) {
                         const paragraphs = chair.message.split('\n').filter(p => p.trim() !== '');
                         document.getElementById('chair-msg-quote').textContent = `"${paragraphs[0]}"`;
-                        document.getElementById('chair-msg-full').innerHTML = paragraphs.map(p => `<p class="ieee-description">${p}</p>`).join('');
+                        // Body shows the message AFTER the highlighted pull-quote (avoids repeating a one-line message)
+                        const rest = paragraphs.slice(1);
+                        const fullEl = document.getElementById('chair-msg-full');
+                        const dividerEl = document.querySelector('#chair .chair-divider');
+                        if (rest.length > 0) {
+                            fullEl.innerHTML = rest.map(p => `<p class="ieee-description">${p}</p>`).join('');
+                        } else {
+                            fullEl.innerHTML = '';
+                            if (dividerEl) dividerEl.style.display = 'none';
+                        }
                     }
                     if (chair.image) {
                         const imgUrl = chair.image.startsWith('http') ? chair.image : `${UPLOADS_BASE}${chair.image}`;
