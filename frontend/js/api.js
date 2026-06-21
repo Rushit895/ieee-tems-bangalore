@@ -3,7 +3,7 @@
 // Local dev (localhost / 127.0.0.1) auto-targets the local backend; any other
 // host uses the deployed production backend. Update PRODUCTION_BACKEND ONCE
 // after the backend is deployed (e.g. the Render URL) — nothing else changes.
-const PRODUCTION_BACKEND = 'https://CHANGE-ME.onrender.com'; // TODO: set to deployed backend URL
+const PRODUCTION_BACKEND = 'https://ieee-tems-api.onrender.com';
 const __isLocalHost = ['localhost', '127.0.0.1', '0.0.0.0', ''].includes(location.hostname);
 const BACKEND_BASE  = __isLocalHost ? 'http://localhost:5000' : PRODUCTION_BACKEND;
 const API_BASE_URL  = `${BACKEND_BASE}/api`;
