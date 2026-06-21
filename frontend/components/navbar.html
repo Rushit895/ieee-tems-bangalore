@@ -45,6 +45,13 @@
 
     <!-- Layer 2: Deep Blue — Navigation Links -->
     <nav class="nav-bottom">
+        <!-- Mobile drawer header (hidden on desktop) -->
+        <div class="nav-drawer-header">
+            <span class="nav-drawer-brand">IEEE TEMS <span>Bangalore</span></span>
+            <button type="button" class="nav-drawer-close" id="mobile-close" aria-label="Close menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
         <div class="container flex-between">
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
@@ -67,5 +74,8 @@
             <a href="join-ieee.html" class="btn-join">Join IEEE</a>
         </div>
     </nav>
+
+    <!-- Mobile menu backdrop (hidden on desktop) -->
+    <div class="nav-backdrop" id="nav-backdrop"></div>
 
 </header>

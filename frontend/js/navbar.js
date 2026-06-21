@@ -37,19 +37,31 @@ function setupNavbar() {
     }
 
     if (menuToggle && navBottom) {
+        const backdrop = document.getElementById('nav-backdrop');
+        const closeBtn = document.getElementById('mobile-close');
+
+        const openMenu = () => {
+            navBottom.classList.add('active');
+            menuToggle.classList.add('active');
+            if (backdrop) backdrop.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        };
+        const closeMenu = () => {
+            navBottom.classList.remove('active');
+            menuToggle.classList.remove('active');
+            if (backdrop) backdrop.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
         menuToggle.addEventListener('click', () => {
-            navBottom.classList.toggle('active');
-            menuToggle.classList.toggle('active');
-            document.body.style.overflow = navBottom.classList.contains('active') ? 'hidden' : '';
+            navBottom.classList.contains('active') ? closeMenu() : openMenu();
         });
+        if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+        if (backdrop) backdrop.addEventListener('click', closeMenu);
 
         // Close menu when clicking a nav link
         navBottom.querySelectorAll('.nav-links > li > a:not(.dropdown-toggle)').forEach(link => {
-            link.addEventListener('click', () => {
-                navBottom.classList.remove('active');
-                menuToggle.classList.remove('active');
-                document.body.style.overflow = '';
-            });
+            link.addEventListener('click', closeMenu);
         });
     }
 
