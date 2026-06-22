@@ -405,17 +405,16 @@
                 document.getElementById('home-updates-list').innerHTML = items.map(blog => {
                     const imgUrl = blog.image ? (blog.image.startsWith('http') ? blog.image : UPLOADS_BASE + blog.image) : null;
                     const bgStyle = imgUrl ? `background-image:url('${imgUrl}')` : 'background:linear-gradient(135deg,#0b2a4a,#10416b)';
-                    const href = blog.articleUrl || '#';
-                    const target = blog.articleUrl ? 'target="_blank" rel="noopener noreferrer"' : '';
+                    const href = `blog-detail.html?id=${blog._id}`;
                     return `
-                    <a class="blog-card col-4 col-md-6 col-sm-12 reveal" href="${href}" ${target}>
+                    <a class="blog-card col-4 col-md-6 col-sm-12 reveal" href="${href}">
                         <div class="blog-card-bg" style="${bgStyle}"></div>
                         <div class="blog-shade"></div>
                         <span class="blog-category-tag">${blog.category || 'Update'}</span>
                         <div class="blog-glass">
                             <span class="blog-date"><i class="far fa-calendar-alt"></i> ${new Date(blog.date).toLocaleDateString()}</span>
                             <h3>${blog.title}</h3>
-                            ${blog.articleUrl ? `<span class="blog-read-more">Read More &rarr;</span>` : ''}
+                            <span class="blog-read-more">Read More &rarr;</span>
                         </div>
                     </a>
                 `}).join('');

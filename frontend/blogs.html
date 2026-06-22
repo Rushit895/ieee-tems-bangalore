@@ -76,17 +76,16 @@
                     const date = new Date(blog.date || Date.now()).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
                     
                     const bgStyle = imgUrl ? `background-image:url('${imgUrl}')` : 'background:linear-gradient(135deg,#0b2a4a,#10416b)';
-                    const href = blog.articleUrl || '#';
-                    const target = blog.articleUrl ? 'target="_blank" rel="noopener noreferrer"' : '';
+                    const href = `blog-detail.html?id=${blog._id}`;
                     return `
-                        <a class="blog-card reveal" href="${href}" ${target} style="grid-column: span 4;">
+                        <a class="blog-card reveal" href="${href}" style="grid-column: span 4;">
                             <div class="blog-card-bg" style="${bgStyle}"></div>
                             <div class="blog-shade"></div>
                             <span class="blog-category-tag">${blog.category || 'Update'}</span>
                             <div class="blog-glass">
                                 <span class="blog-date"><i class="far fa-calendar-alt"></i> ${date}</span>
                                 <h3>${blog.title}</h3>
-                                ${blog.articleUrl ? `<span class="blog-read-more">Read More &rarr;</span>` : ''}
+                                <span class="blog-read-more">Read More &rarr;</span>
                             </div>
                         </a>
                     `;
