@@ -472,6 +472,12 @@ body.menu-open .fixed-seal {
     transform: translateY(0);
 }
 
+/* Hide the "Scroll" hint + animated line from all hero sections site-wide */
+.cine-scroll-indicator,
+.ev-scroll-indicator,
+.hero-scroll-indicator,
+.hero-scroll { display: none !important; }
+
 @media (max-width: 768px) {
     .grid-12 {
         grid-template-columns: repeat(1, 1fr);
