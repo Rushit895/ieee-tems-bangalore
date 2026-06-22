@@ -405,7 +405,7 @@
                 document.getElementById('home-updates-list').innerHTML = items.map(blog => {
                     const imgUrl = blog.image ? (blog.image.startsWith('http') ? blog.image : UPLOADS_BASE + blog.image) : null;
                     const bgStyle = imgUrl ? `background-image:url('${imgUrl}')` : 'background:linear-gradient(135deg,#0b2a4a,#10416b)';
-                    const href = `blog-detail.html?id=${blog._id}`;
+                    const href = `blog-detail?id=${blog._id}`;
                     return `
                     <a class="blog-card col-4 col-md-6 col-sm-12 reveal" href="${href}">
                         <div class="blog-card-bg" style="${bgStyle}"></div>
