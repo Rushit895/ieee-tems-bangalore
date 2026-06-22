@@ -13,7 +13,22 @@ import ManageBlogs from './pages/ManageBlogs/ManageBlogs';
 import ManagePastExeCom from './pages/ManagePastExeCom/ManagePastExeCom';
 import ErrorBoundary from './components/ErrorBoundary';
 
-const isAuthenticated = () => !!localStorage.getItem('adminToken');
+const isAuthenticated = () => {
+  const token = localStorage.getItem('adminToken');
+  if (!token) return false;
+  try {
+    // Treat an expired JWT as logged-out so the user is sent back to login
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    if (payload.exp && payload.exp * 1000 < Date.now()) {
+      localStorage.removeItem('adminToken');
+      localStorage.removeItem('adminUser');
+      return false;
+    }
+    return true;
+  } catch {
+    return false;
+  }
+};
 
 const ProtectedRoute = ({ children }) => {
   return isAuthenticated() ? children : <Navigate to="/login" replace />;

@@ -35,6 +35,14 @@ async function apiCall(method, url, data = null, config = {}) {
     return response.data;
 
   } catch (err) {
+    // Session expired / invalid token → clear and send back to login
+    if (err.response?.status === 401) {
+      localStorage.removeItem('adminToken');
+      localStorage.removeItem('adminUser');
+      if (!window.location.pathname.endsWith('/login')) {
+        window.location.href = '/login';
+      }
+    }
     const errorMessage = err.response?.data?.message || err.message || "An unknown network error occurred.";
     console.error(`[API ERROR] ${method.toUpperCase()} ${url}:`, errorMessage);
     throw new Error(errorMessage);
