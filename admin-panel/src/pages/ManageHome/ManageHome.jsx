@@ -121,6 +121,7 @@ const ManageHome = () => {
           { value: 'blogs', label: 'Blogs' },
           { value: 'resources', label: 'Resources' },
           { value: 'contact', label: 'Contact' },
+          { value: 'gallery', label: 'Gallery' },
           { value: 'join', label: 'Join IEEE' },
           { value: 'search', label: 'Search Results' },
         ] },

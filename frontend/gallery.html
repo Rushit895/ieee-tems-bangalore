@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="css/cinematic-hero.css">
     <style>
         /* ── LIGHTBOX ── */
         .lightbox {
@@ -242,13 +243,20 @@
     <div id="navbar-placeholder"></div>
 
     <main>
-        <!-- Hero Section — DO NOT TOUCH -->
-        <section class="page-hero section-spacing reveal">
-            <div class="text-container text-container-centered">
-                <span class="section-label">Visual Journey</span>
-                <h1 class="ieee-heading">Our <span>Gallery</span></h1>
-                <p class="ieee-description">Capturing moments of innovation, leadership, and community excellence at IEEE TEMS Bangalore.</p>
+        <!-- Hero Section (cinematic — admin-editable via page-content?page=gallery) -->
+        <section class="page-hero cine-hero" id="gallery-hero" data-hero-page="gallery">
+            <div class="cine-media">
+                <img class="cine-bg-img" src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=2000" alt="">
+                <video class="cine-bg-video" muted loop playsinline></video>
             </div>
+            <div class="cine-overlay"></div>
+            <div class="hero-center-content">
+                <span id="hero-label" class="cine-label" data-hero-label>Visual Journey</span>
+                <h1 id="hero-title" data-hero-title>Our <span>Gallery</span></h1>
+                <p id="hero-desc" data-hero-desc>Capturing moments of innovation, leadership, and community excellence at IEEE TEMS Bangalore.</p>
+            </div>
+            <div class="cine-scroll-indicator"><span>Scroll</span><div class="cine-scroll-line"></div></div>
+            <div class="cine-gold-line"></div>
         </section>
 
         <!-- Gallery Filter + Grid Section -->
@@ -291,8 +299,10 @@
     <script src="js/main.js"></script>
     <script src="js/api.js"></script>
     <script src="js/search.js"></script>
+    <script src="js/cinematic-hero.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
+            initCinematicHero('gallery');
             const grid        = document.getElementById('gallery-grid');
             const filterWrap  = document.getElementById('filter-buttons');
             const countEl     = document.getElementById('gallery-count');
