@@ -32,14 +32,15 @@
         <!-- Featured Image -->
         <section class="section-spacing py-0">
             <div class="container">
-                <div class="blog-featured-img-wrap reveal">
+                <figure class="blog-featured-img-wrap reveal">
+                    <div class="blog-featured-img-blur" id="blog-detail-blur"></div>
                     <img id="blog-detail-img" src="" alt="Featured Image">
-                </div>
+                </figure>
             </div>
         </section>
 
         <!-- Article Content -->
-        <section class="section-spacing">
+        <section class="section-spacing blog-content-section">
             <div class="container">
                 <div class="text-container">
                     <div id="blog-detail-content" class="blog-rich-text ieee-description">
@@ -93,11 +94,12 @@
                     document.getElementById('blog-detail-date').textContent = new Date(blog.date || blog.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
                     
                     const imgUrl = blog.image ? (blog.image.startsWith('http') ? blog.image : `${UPLOADS_BASE}${blog.image}`) : null;
-                    const imgContainer = document.getElementById('blog-detail-img').parentElement;
+                    const figure = document.querySelector('.blog-featured-img-wrap');
                     if (imgUrl) {
                         document.getElementById('blog-detail-img').src = imgUrl;
-                    } else {
-                        imgContainer.style.display = 'none';
+                        document.getElementById('blog-detail-blur').style.backgroundImage = `url('${imgUrl}')`;
+                    } else if (figure) {
+                        figure.style.display = 'none';
                     }
 
                     // Simple markdown-ish conversion for content (handle newlines as paragraphs)
@@ -120,32 +122,107 @@
     </script>
 
     <style>
-        .blog-detail-hero { padding: 60px 0 40px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
-        .back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--ieee-blue); text-decoration: none; font-weight: 700; font-size: 0.85rem; margin-bottom: 20px; transition: 0.2s; }
+        /* ── Hero header ── */
+        .blog-detail-hero {
+            padding: 48px 0 72px;
+            background: linear-gradient(180deg, #f8fafc 0%, #eaf0f6 100%);
+            border-bottom: 1px solid #e4ebf2;
+        }
+        .blog-detail-hero .text-container { max-width: 820px; margin: 0 auto; text-align: center; }
+        .back-link {
+            display: inline-flex; align-items: center; gap: 8px;
+            color: var(--ieee-blue); text-decoration: none; font-weight: 700;
+            font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase;
+            margin-bottom: 26px; transition: gap 0.2s ease, color 0.2s ease;
+        }
         .back-link:hover { gap: 12px; color: var(--ieee-royal-blue); }
-        .blog-meta-detail { display: flex; gap: 24px; margin-top: 20px; }
-        .meta-item { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
-        .meta-item i { color: var(--ieee-blue); }
 
-        .blog-featured-img-wrap { width: 100%; height: 500px; margin-top: -40px; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 60px -12px rgba(0,0,0,0.15); border: 4px solid white; position: relative; z-index: 5; }
-        .blog-featured-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+        #blog-detail-cat {
+            display: inline-block;
+            background: var(--ieee-gold);
+            color: #0b1f33;
+            font-size: 0.68rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+            padding: 6px 16px; border-radius: 50px; margin-bottom: 20px;
+        }
+        #blog-detail-title {
+            font-size: clamp(2rem, 4vw, 3rem) !important;
+            font-weight: 800; color: #0b1f33; line-height: 1.15;
+            margin: 0 0 22px !important;
+        }
+        .blog-meta-detail { display: flex; gap: 26px; margin-top: 0; justify-content: center; flex-wrap: wrap; }
+        .meta-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #5a6a7a; font-weight: 600; }
+        .meta-item i { color: var(--ieee-gold); }
 
-        .blog-rich-text { font-size: 1.1rem; line-height: 1.8; color: #334155; }
-        .blog-rich-text p { margin-bottom: 24px; }
-        
-        .blog-share-box { margin-top: 60px; padding: 30px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
-        .blog-share-box h4 { margin: 0; font-size: 1rem; color: var(--ieee-navy); }
-        .share-btns { display: flex; gap: 15px; }
-        .share-btns a { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: white; color: var(--ieee-navy); border: 1px solid #e2e8f0; transition: 0.2s; font-size: 1.1rem; }
-        .share-btns a:hover { transform: translateY(-3px); color: white; border-color: transparent; }
+        /* ── Featured image — full poster on a blurred backdrop of itself ── */
+        .blog-featured-img-wrap {
+            position: relative;
+            width: 100%;
+            max-width: 920px;
+            margin: -52px auto 0;
+            min-height: 320px;
+            max-height: 82vh;
+            border-radius: 18px;
+            overflow: hidden;
+            background: #0b1f33;
+            box-shadow: 0 30px 70px -20px rgba(11, 31, 51, 0.55);
+            border: 6px solid #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+        }
+        .blog-featured-img-blur {
+            position: absolute; inset: 0;
+            background-size: cover; background-position: center;
+            filter: blur(34px) brightness(0.55);
+            transform: scale(1.25);
+        }
+        .blog-featured-img-wrap img {
+            position: relative; z-index: 2;
+            max-width: 100%; max-height: 82vh;
+            width: auto; height: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* ── Article content ── */
+        .blog-content-section { padding: 64px 0 40px; }
+        .blog-content-section .text-container { max-width: 720px; margin: 0 auto; }
+        .blog-rich-text { font-size: 1.18rem; line-height: 1.9; color: #2d3e50; }
+        .blog-rich-text p { margin-bottom: 26px; }
+        .blog-rich-text p:first-of-type::first-letter {
+            float: left; font-size: 3.6rem; line-height: 0.82; font-weight: 800;
+            color: var(--ieee-royal-blue); padding: 6px 14px 0 0;
+        }
+
+        /* ── Share box ── */
+        .blog-share-box {
+            margin-top: 56px; padding: 26px 32px;
+            background: #f8fafc; border-radius: 14px; border: 1px solid #e8edf3;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .blog-share-box h4 { margin: 0; font-size: 1rem; color: #0b1f33; font-weight: 700; }
+        .share-btns { display: flex; gap: 14px; }
+        .share-btns a {
+            width: 42px; height: 42px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            background: #fff; color: #0b1f33; border: 1px solid #e2e8f0;
+            transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+            font-size: 1.1rem;
+        }
+        .share-btns a:hover { transform: translateY(-3px); color: #fff; border-color: transparent; }
         .share-btns a:nth-child(1):hover { background: #0077b5; }
         .share-btns a:nth-child(2):hover { background: #1da1f2; }
         .share-btns a:nth-child(3):hover { background: #25d366; }
 
         @media (max-width: 768px) {
-            .blog-featured-img-wrap { height: 300px; margin-top: -20px; }
-            .blog-share-box { flex-direction: column; gap: 20px; text-align: center; }
-            .blog-detail-hero { padding: 40px 0; }
+            .blog-detail-hero { padding: 28px 0 52px; }
+            .blog-featured-img-wrap { margin-top: -34px; max-height: 70vh; border-width: 4px; border-radius: 14px; }
+            .blog-featured-img-wrap img { max-height: 70vh; }
+            .blog-content-section { padding: 40px 0 30px; }
+            .blog-rich-text { font-size: 1.05rem; }
+            .blog-rich-text p:first-of-type::first-letter { font-size: 2.8rem; }
+            .blog-share-box { flex-direction: column; gap: 18px; text-align: center; }
         }
     </style>
 </body>
